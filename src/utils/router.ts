@@ -30,12 +30,12 @@ export const mergeServerRoute = (
       component: meta.isIframe ? Iframe : x.list && x.list.length ? Layout : viewComponent
     };
     r.meta = {
-      title: x.name,
+      title: x.menuName,
       icon: x.icon,
-      openStyle: x.openStyle,
-      id: x.id,
+      openStyle: x.open,
+      id: x.menuId,
       url: x.url,
-      matched: [...matched, { path, title: x.name }],
+      matched: [...matched, { path, title: x.menuName }],
       ...meta
     };
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -130,7 +130,7 @@ export const registerToRouter = (router: Router, rs: RouteRecordRaw[]): void => 
 };
 
 export const mergeRouteToOpenStyle = (url: string, item: IServerMenus): [string, IObject] => {
-  url = url || `/iframe/${item.id}`;
+  url = url || `/iframe/${item.menuId}`;
   let meta: IObject = {};
   const toRoutePath = (url: string): string => {
     return (url = !/^\//g.test(url) ? "/" + url : url);

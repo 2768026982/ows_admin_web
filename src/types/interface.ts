@@ -18,15 +18,15 @@ export interface IHttpResponse {
 export interface IServerMenus {
   createDate: string;
   icon: string | boolean;
-  id: string;
-  name: string;
+  menuId: string;
+  menuName: string;
   parentName: string;
   permissions: string;
   pid: string;
   sort: number;
   type: number;
   url: string;
-  openStyle: number;
+  open: Boolean;
   redirect?: string;
   list?: IServerMenus[];
 }
