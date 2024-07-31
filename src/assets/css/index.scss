@@ -1,0 +1,410 @@
+@import "normalize";       // api: https://github.com/necolas/normalize.css/
+@import "variables";       // 站点变量
+@import "base";
+
+//@import url('https://fonts.googleapis.com/css?family=Noto+Sans:100,300,400,500,700,900|Noto+Sans+JP:100,300,400,500,700,900|Noto+Sans+KR:100,300,400,500,700,900|Noto+Sans+TC:100,300,400,500,700,900|Noto+Sans+SC:100,300,400,500,700,900');
+//@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap');
+//@import url("https://fonts.googleapis.com/css?family=Ubuntu:100,300,400,500,700,900");
+
+body{
+  font-family:"Noto Sans TC","Noto Sans","Noto Sans SC",  "Source Sans Pro", "PingFang TC", "Microsoft YaHei";
+  margin: 0px;
+}
+.font-NotoSerif{
+  font-family: "Noto Serif","Noto Serif TC","Noto Serif SC";
+}
+.font-weight-bold{
+  font-weight: bold;
+}
+.font-size-18{
+  font-size: 18px;
+}
+.font-size-16{
+  font-size: 16px;
+}
+.font-size-14{
+  font-size: 14px;
+}
+.font-title{
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 25px;
+}
+.page-title{
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 40px;
+}
+//间距 (padding,marigin)
+@for $i from 0 through 8 {
+  .mt-#{$i} {
+    margin-top: $i*5px !important;
+  }
+}
+@for $i from 0 through 8 {
+  .mb-#{$i} {
+    margin-bottom: $i*5px !important;
+  }
+}
+@for $i from 0 through 8 {
+  .my-#{$i} {
+    margin-top: $i*5px !important;
+    margin-bottom: $i*5px !important;
+  }
+}
+@for $i from 0 through 8 {
+  .ml-#{$i} {
+    margin-left: $i*5px !important;
+  }
+}
+@for $i from 0 through 8 {
+  .mr-#{$i} {
+    margin-right: $i*5px !important;
+  }
+}
+@for $i from 0 through 8 {
+  .pb-#{$i} {
+    padding-bottom: $i*5px !important;
+  }
+}
+@for $i from 0 through 8 {
+  .pt-#{$i} {
+    padding-top: $i*5px !important;
+  }
+}
+@for $i from 0 through 8 {
+  .pl-#{$i} {
+    padding-left: $i*5px !important;
+  }
+}
+@for $i from 0 through 8 {
+  .pr-#{$i} {
+    padding-right: $i*5px !important;
+  }
+}
+.float-right{
+  float: right;
+}
+.float-left{
+  float: left;
+}
+.page-scroll {
+  height: 100%;
+}
+.d-flex{
+  display:flex;
+}
+.flex-direction-column{
+  flex-direction: column;
+}
+.flex-1{
+  flex:1;
+}
+.justify-content-center{
+  justify-content:center;
+}
+.justify-content-between{
+  justify-content:space-between;
+}
+
+.flex-wrap{
+  flex-wrap: wrap;
+}
+
+.flex-end{
+  justify-content: flex-end;
+}
+.flex-start{
+  justify-content: flex-start;
+}
+.align-items-center{
+  align-items: center;
+}
+.position-absolute{
+  position:absolute;
+}
+
+
+.text-right{
+  text-align: right;
+}
+.text-left{
+  text-align:left;
+}
+.page-scroll .el-scrollbar__wrap {
+  overflow-x: hidden;
+}
+//element-ui 公共样式修改
+.el-button{
+  font-size: 16px;
+  //padding: 14px 42px;
+  border-radius: 10px;
+  .icon-svg{
+    font-size: initial;
+  }
+  &--medium{
+    padding: 10px 22px;
+  }
+  &--small{
+    padding: 9px 15px;
+  }
+}
+
+.el-input{
+  &__inner{
+    border-radius: 10px;
+  }
+}
+.el-textarea {
+  &__inner{
+    border-radius: 10px;
+    padding: 10px 16px;
+  }
+}
+.el-tag{
+  height:24px;
+  line-height: 22px;
+  border-radius: 8px;
+  min-width: 58px;
+  text-align: center;
+}
+
+.el-row--flex{
+  flex-wrap: wrap;
+}
+
+.blue{
+  color:$--color-primary;
+}
+.dark-gray{
+  color:$--dark-gray;
+}
+.light-gray{
+  color:$--lightgray-30;
+
+}
+.red{
+  color:$red_1;
+}
+.font-size-14{
+  font-size:14px;
+}
+
+.display-none{
+  display:none;
+}
+.position-relative{
+  position:relative;
+}
+.no-border{
+  border-radius: 5%;
+}
+
+
+
+
+.el-form-item.is-not-required .el-form-item__label:before{
+  content:''!important;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+.font-size-10{
+  font-size:10px;
+}
+
+.flex-wrap{
+  flex-wrap: wrap;
+}
+.red-border-error{
+  border: 1px solid $red_1;
+  border-radius: 10px;
+}
+.el-link{
+  font-size: 16px;
+}
+
+.line{
+  background-color: gainsboro;
+  margin-top:0!important;
+  margin-bottom: 24px;
+
+}
+.opacity-block{
+  opacity: 1;
+}
+.opacity-none{
+  opacity: 0;
+}
+//***********文件上传/下载 Start*************
+.file-upload-before {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.16px;
+
+  .icon-svg {
+    width: 20px;
+    height: 18px;
+  }
+}
+
+.el-upload-list__item-name {
+  min-width: 200px;
+  min-height: 49px;
+  padding: 5px 10px 5px 13px!important;
+  border-radius: 10px;
+  border: solid 1px $--lightgray-30;
+  background-color: $content--background-color;
+  color:$--color-primary;
+  display: flex;
+  align-items: center;
+  font-size:14px;
+  font-weight:500;
+  letter-spacing: 0.14px;
+  margin-right:revert;
+  position:relative;
+
+
+
+  &:hover{
+    text-decoration: none;
+    background-color: $--lightblue-50;
+    border:1px solid $--color-primary;
+  }
+
+}
+.el-upload-list.el-upload-list--text{
+  display:flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.el-upload-list__item{
+  position:relative;
+  width:revert;
+  margin-right:20px;
+  margin-top: 5px;
+  &:first-child{
+    margin-top:auto;
+  }
+  &:hover{
+    background-color: transparent;
+  }
+
+  .el-icon-close{
+    display:revert;
+    right: -36px;
+    top:15px;
+    &:before{
+      content:'\e7c9';
+
+      font-size:24px;
+    }
+  }
+   .el-icon-upload-success {
+    display: none;
+  }
+
+}
+
+.el-icon-document:before {
+  font-size: 24px;
+  color:$--color-primary;
+}
+:focus {
+  outline: none;
+}
+
+.el-upload.el-upload--text{
+  margin-bottom: 10px;
+  color:$--color-primary;
+  &:hover{
+    color:$--dark-blue;
+  }
+}
+.downLoadItem{
+  margin-right:35px;
+  margin-bottom:10px;
+}
+
+//***********文件上传 END*************
+//回报管道 下拉框
+.return-channel{
+  max-width: 344px;
+}
+.el-select,.el-cascader{
+  .el-tag.el-tag--info{
+    background: $--lightgray-10;
+    color: $--black;
+    border: none;
+    .el-tag__close{
+      color: #fff;
+    }
+  }
+}
+
+.flex-radio{
+  &.el-radio{
+    display: flex;
+    align-items: center;
+    margin-top: 14px;
+  }
+  .el-radio__label{
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+}
+.el-radio-group{
+  margin-top: 6px;
+  .el-radio__label{
+    font-size: 16px;
+  }
+}
+
+.max-width{
+  width:100%;
+  .el-form-item{
+    width:48%;
+  }
+}
+
+.revert-padding-bottom{
+  padding-bottom:0;
+}
+.el-time-panel__content::after, .el-time-panel__content::before{
+  margin-top: -6px;
+}
+
+.site-navbar__lang .el-input__inner{
+  width:100px;
+}
+
+.el-table .cell.el-tooltip {
+  cursor: pointer;
+}
+.total-text{
+  background: aliceblue;
+  padding: 13px;
+}
+.el-table thead.is-group th{
+  background-color: white!important;
+}
+.common-title{
+  font-size: 32px;
+  font-weight: 500;
+  text-align: center;
+}
+.left-title{
+  font-size:26px;
+  font-weight:500;
+}
+.third-title{
+  font-size:23px;
+  font-weight:500;
+}
+.el-select{
+  width:100% !important
+}
+

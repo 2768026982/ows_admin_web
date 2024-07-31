@@ -1,0 +1,67 @@
+// 站点主色
+// tips: 要达到整站主题修改效果, 请确保[$--color-primary]站点主色与[/src/element-ui-theme/index.js]文件中[import './element-[#17B3A3]/index.css']当前主题色一致
+$--color-primary: #3379EE;
+
+$--lightblue-10:#f5f9ff;
+$--lightblue-50:#e7f1fe;
+$--blue:#3379EE;
+$--blue-light-1:#6ea6fd;
+$--dark-blue:#003794;
+
+$--lightgray-10:#f0f0f0;
+$--lightgray-30:#c7c7c7;
+$--light-gray:#b7b7b7;
+$--dark-gray:#6b6b6b;
+
+$--black:#161a21;
+$--black-2:#000000;
+// Navbar
+$navbar--background-color: $--color-primary;
+
+// Sidebar
+$sidebar--background-color-dark: #293344;
+$sidebar--color-text-dark: #8a979e;
+
+// Content
+$content--background-color: #fff;
+
+//绿色
+$green_1:#10ae41;
+$green_2:#e7feeb;
+
+//红色
+$red_1:#d41831;
+$red_2:#ffe4e7;
+
+
+//灰色
+$grey: #c8c9ca;
+$grey-3:#979ca9;
+$grey-11:#9fa0a0;
+$grey-5:#6D7278;
+$grey-6-1:#595757;
+$grey-7-1:#585b5f;
+$grey-light-3:#f9f9f9;
+$grey-7-2:#545b62;
+$grey-7-3:#4e555b;
+$grey-light-4:#f6f6f6;
+$grey-light-5:#eeeeee;
+$grey-light-10:#c8c9ca;
+$grey-6:#e0e0e0;
+$gray-light-10:#c8c9ca;
+$gray-6:#e0e0e0;
+$grey-7:#e6e6e6;
+$grey-8:#d5d5d5;
+$grey-9:#f5f5f5;
+$grey-light-9:#ddd;
+$grey-light-10-1:#f3f3f3;
+
+//灰蓝色
+$grey-blue-3-1:#ebf5ff;
+$grey-blue-3:#f0f3f8;
+$grey-blue-5:#dee6ee;
+$grey-blue-7:#beccdb;
+$grey-blue-7-1:#d8d8d8;
+$grey-blue-7-2:#ccc;
+$grey-blue-7-3:#f6f7f7;
+
