@@ -77,12 +77,14 @@ import {ref, reactive, inject} from "vue";
 import baseService from "@/service/baseService";
 import { useRouter } from "vue-router";
 import md5 from "js-md5";
+import { useAppStore } from "@/store";
 import {useCookies} from "vue3-cookies"
 import {useI18n} from "vue-i18n";
 import {ElMessage} from "element-plus";
 import global from '../utils/global_variable';
 const i18n = useI18n()
 const router = useRouter();
+const store = useAppStore();
 const {t} = useI18n()
 const {cookies} = useCookies();
 const langList = ref([{
@@ -178,6 +180,7 @@ const getLoginLanguageList = () => {
           if (res.body != null){
             langList.value = res.body.records
             // store.commit('basic/updateLoginLang', res.body.records)
+            store.
             setLang()
           }
         }
@@ -323,7 +326,7 @@ const sendVerifyCode = (type: any) => {
       .then((res) => {
         if (res && res.resultCode === 200) {
           ElMessage.success({
-            message: t("common.login.sendVerifyCode-message"),
+            message: t("common.login.sendVerifyCode-message")
           })
         }
       })
