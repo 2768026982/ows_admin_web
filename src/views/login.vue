@@ -160,9 +160,8 @@ const getLoginLanguageList = () => {
       if(res && res.resultCode === 200){
         if (res.body != null){
           langList.value = res.body.records
-          // store.commit('basic/updateLoginLang', res.body.records)
-          // store.
-          // setLang()
+          store.updateLoginLang(res.body.records)
+          setLang()
         }
       }
 

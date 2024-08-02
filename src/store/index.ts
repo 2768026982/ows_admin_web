@@ -35,7 +35,13 @@ export const useAppStore = defineStore("useAppStore", {
       routeToMeta: {}, //url对应标题meta信息
       tabs: [], //tab标签页集合
       activeTabName: "", //tab当前焦点页
-      closedTabs: [] //存储已经关闭过的tab
+      closedTabs: [], //存储已经关闭过的tab
+      basic:{
+       langList : localStorage.getItem('langList') ? JSON.parse(localStorage.getItem('langList') as string) : []
+      },
+      adminOther:{
+        loginLang : []
+      }
     } as IObject
   }),
   actions: {
@@ -43,6 +49,14 @@ export const useAppStore = defineStore("useAppStore", {
       Object.keys(data).forEach((x: string) => {
         this.state[x] = data[x];
       });
+    },
+    //登入語言
+    updateLoginLang(data :any){
+      this.state.adminOther.loginLang = data;
+    },
+     updateLangList(state :any,langList :any){
+      this.state.langList = langList
+      localStorage.setItem("langList",JSON.stringify(state.langList))
     },
     // initApp() {
     //   return Promise.all([
