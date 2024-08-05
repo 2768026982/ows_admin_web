@@ -1,54 +1,71 @@
 <template>
-  <div class="rr-login">
-    <!-- 语言选择 -->
-    <div style="position: absolute;top:0;right:0;margin-top: 2%;margin-right: 60px">
-      <div index="0" class="site-navbar__lang">
-        <el-select v-model="lang" :placeholder="$t('main-navbar.changeLang')" popper-class="site-navbar__langSelect" @change="changeLang">
-          <el-option v-for="(item, index) in langList" :key="index" :label="item.langTypeName"
-                     :value="item.langTypeId">
-          </el-option>
-        </el-select>
-      </div>
-    </div>
-    <div class="rr-login-wrap">
-      <div class="rr-login-left hidden-sm-and-down">
-        <p class="rr-login-left-title">{{ $t("common.login.brand-info-1") }}</p>
-        <p class="rr-login-left-title">{{ $t("common.login.brand-info-2") }}</p>
-      </div>
-      <div class="rr-login-right">
-        <div class="rr-login-right-main">
-          <h4 class="rr-login-right-main-title">{{ $t("common.login.title") }}</h4>
-          <el-form ref="formRef" :rules="dataRule" label-width="80px" :status-icon="true" :model="dataForm" @keyup.enter.native="dataFormSubmit()">
-            <el-form-item label-width="0" prop="userName">
-              <el-input v-model="dataForm.userName" :placeholder="$t('common.login.username')" prefix-icon="user"  :disabled="disableFlg"></el-input>
+  <div class="site-wrapper site-page--login">
+    <div class="site-content__wrapper">
+      <div class="site-content" style="background: transparent">
+        <div class="brand-info">
+          <!-- 品牌信息 -->
+          <h2 class="brand-info__text">{{ t("common.login.brand-info-1") }}</h2>
+          <h2 class="brand-info__text">{{ t("common.login.brand-info-2") }}</h2>
+          <p class="brand-info__intro"></p>
+        </div>
+
+        <div class="login-main">
+          <!-- 语言选择 -->
+          <div style="position: absolute;top:0;right:0;margin-top: 5%;margin-right: 60px">
+            <div index="0" class="site-navbar__lang">
+              <el-select v-model="lang" :placeholder="t('main-navbar.changeLang')" popper-class="site-navbar__langSelect" @change="changeLang">
+                <el-option v-for="(item, index) in langList" :key="index" :label="item.langTypeName"
+                           :value="item.langTypeId">
+                </el-option>
+              </el-select>
+            </div>
+          </div>
+
+          <!-- 登录类型切换 -->
+          <div class="login-type-row">
+            <div :class="{ 'login-title': true, 'active': loginType === 0 }">{{ t("common.login.title") }}</div>
+            <!-- <div :class="{ 'login-title': true, 'active': loginType === 1 }" @click="changeType(1)">{{ $t("common.login.AD-title") }}</div> -->
+          </div>
+
+          <el-form :model="dataForm" :rules="dataRule" ref="formRef" @keyup.enter.native="dataFormSubmit()"
+                   status-icon>
+            <el-form-item prop="userName">
+              <el-input v-model="dataForm.userName" :disabled="disableFlg" :placeholder="t('common.login.username')"></el-input>
             </el-form-item>
-            <el-form-item label-width="0" prop="password">
-              <el-input :placeholder="$t('common.login.password')" v-model="dataForm.password" prefix-icon="lock" show-password></el-input>
+            <el-form-item prop="password">
+              <el-input v-model="dataForm.password" type="password" show-password :disabled="disableFlg" :placeholder="t('common.login.password')"></el-input>
             </el-form-item>
-            <el-form-item label-width="0" prop="captcha">
-              <el-space class="rr-login-right-main-code">
-                <el-input v-model="dataForm.captcha" :placeholder="$t('common.login.captcha')" prefix-icon="first-aid-kit" :disabled="disableFlg"></el-input>
-                <img style="vertical-align: middle; height: 40px; cursor: pointer" :src="captchaPath" @click="getCaptcha()" alt="" />
-              </el-space>
+            <el-form-item prop="captcha">
+              <el-row :gutter="20">
+                <el-col :span="14">
+                  <el-input v-model="dataForm.captcha" :disabled="disableFlg" :placeholder="t('common.login.captcha')"></el-input>
+                </el-col>
+                <el-col :span="10" class="login-captcha">
+                  <img :src="captchaPath" @click="getCaptcha()" alt="">
+                </el-col>
+              </el-row>
             </el-form-item>
-            <el-form-item label-width="0">
-              <el-button :loading="loading" type="primary" size="small"  @click="dataFormSubmit()" class="rr-login-right-main-btn"> {{ $t("common.login.login-btn") }} </el-button>
+            <el-form-item>
+              <el-button class="login-btn-submit" type="primary" :loading="loading" @click="dataFormSubmit()">
+                {{ t("common.login.login-btn") }}
+              </el-button>
             </el-form-item>
           </el-form>
         </div>
       </div>
     </div>
+
     <!-- 更换部门弹窗 -->
-    <el-dialog :title="$t('common.login.dialog-1-title')" v-model="showChangeDept" width="30%" :show-close="false"
+    <el-dialog :title="t('common.login.dialog-1-title')" v-model="showChangeDept" width="30%" :show-close="false"
                :close-on-click-modal="false" :close-on-press-escape="false">
-      <el-select v-model="userDept" style="width: 100%;" :placeholder="$t('common.login.dialog-1-userDept')">
+      <el-select v-model="userDept" style="width: 100%;" :placeholder="t('common.login.dialog-1-userDept')">
         <el-option v-for="(item, index) in userDeptList" :key="index" :label="item.deptName" :value="item.deptId">
         </el-option>
       </el-select>
 
       <div slot="footer" class="dialog-footer">
-        <el-button @click="show()">{{$t("common.login.dialog-1-cancel")}}</el-button>
-        <el-button type="primary" :disabled="userDept === ''" @click="submitUserDept">{{$t("common.login.dialog-1-submit")}}</el-button>
+        <el-button @click="show()">{{t("common.login.dialog-1-cancel")}}</el-button>
+        <el-button type="primary" :disabled="userDept === ''" @click="submitUserDept">{{t("common.login.dialog-1-submit")}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -63,11 +80,13 @@ import md5 from "js-md5";
 import { useAppStore } from "@/store";
 import {useCookies} from "vue3-cookies"
 import {useI18n} from "vue-i18n";
+import app from "@/constants/app";
 import {ElMessage} from "element-plus";
 import global from '../utils/global_variable';
 const i18n = useI18n()
 const router = useRouter();
 const store = useAppStore();
+const {t} = useI18n()
 const {cookies} = useCookies();
 const langList = ref([{
   field1: '',
@@ -78,26 +97,27 @@ const langList = ref([{
 ])
 const lang = ref('')
 const loginType = ref(0)
+const formRef = ref()
 const dataForm = ref({
   userName: '',
   password: '',
   uuid: '',
   captcha: '',
 });
-const formRef = ref({
+const dataRule = ref({
   userName: [{
     required: true,
-    // message: $t("common.login.dataRule-username"),
+    message: t("common.login.dataRule-username"),
     trigger: 'blur'
   }],
   password: [{
     required: true,
-    // message: $t("common.login.dataRule-password"),
+    message: t("common.login.dataRule-password"),
     trigger: 'blur'
   }],
   captcha: [{
     required: true,
-    // message: $t("common.login.dataRule-captcha"),
+    message: t("common.login.dataRule-captcha"),
     trigger: 'blur'
   }]
 });
@@ -150,7 +170,8 @@ const changeType = (type: number) => {
 }
 const getCaptcha = () => {
   dataForm.value.uuid = getUuid()
-  captchaPath.value = `http://localhost:9080/aiotek-server/captcha.jpg?uuid=${dataForm.value.uuid}`;
+  captchaPath.value = `${app.api}/captcha.jpg?uuid=${dataForm.value.uuid}`;
+  // captchaPath.value = `http://localhost:9080/aiotek-server/captcha.jpg?uuid=${dataForm.value.uuid}`;
 }
 
 const getLoginLanguageList = () => {
@@ -160,6 +181,7 @@ const getLoginLanguageList = () => {
       if(res && res.resultCode === 200){
         if (res.body != null){
           langList.value = res.body.records
+          // localStorage.setItem('langList',res.body.records)
           store.updateLoginLang(res.body.records)
           setLang()
         }
@@ -259,6 +281,10 @@ const dataFormSubmit1 = () => {
           disableFlg.value = false
           loading.value = false
         }
+      }).catch(()=>{
+        getCaptcha()
+        disableFlg.value = false
+        loading.value = false
       })
     } else {
       disableFlg.value = false
@@ -315,163 +341,115 @@ const sendVerifyCode = (type: any) => {
 initialize();
 </script>
 
-<style lang="less" scoped>
-@import url("@/assets/theme/base.less");
-.rr-login {
-  width: 100vw;
-  height: 100vh;
-  background: #019ec4;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+<style lang="scss">
+.site-wrapper.site-page--login {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  //background-color: rgba(38, 50, 56, .6);
+  overflow: hidden;
 
-  @media only screen and (max-width: 992px) {
-    .rr-login-wrap {
-      width: 96% !important;
-    }
-    .rr-login-right {
-      width: 100% !important;
-    }
+  &:before {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    content: "";
+    //background-image: url(~@/assets/img/index-bg.png);
+    //background-image: url(~@/assets/img/index-banner-2.jpg);
+    background-size: cover;
   }
 
-  &-wrap {
-    margin: 0 auto;
-    width: 1000px;
-    box-shadow: -4px 5px 10px rgba(0, 0, 0, 0.4);
-    animation-duration: 1s;
-    animation-fill-mode: both;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-
-  &-left {
-    justify-content: center;
-    flex-direction: column;
-    background-color: @--color-primary;
-    color: #fff;
-    float: left;
-    width: 50%;
-
-    &-title {
-      text-align: center;
-      color: #fff;
-      font-weight: 300;
-      letter-spacing: 2px;
-      font-size: 32px;
-    }
-  }
-
-  &-right {
-    border-left: none;
-    color: #fff;
-    background-color: #fff;
-    width: 50%;
-    float: left;
-
-    &-main {
-      margin: 0 auto;
-      width: 65%;
-      &-title {
-        color: #333;
-        margin-bottom: 40px;
-        font-weight: 500;
-        font-size: 24px;
-        text-align: center;
-        letter-spacing: 4px;
-      }
-
-      &-lang .iconfont {
-        font-size: 20px;
-        color: #606266;
-        font-weight: 800;
-        width: 20px;
-        height: 20px;
-      }
-
-      .el-input__inner {
-        border-width: 0;
-        border-radius: 0;
-        border-bottom: 1px solid #dcdfe6;
-      }
-
-      &-code {
-        width: 100%;
-        .el-space__item:first-child {
-          flex: 1;
-        }
-      }
-      &-btn {
-        width: 100%;
-        height: 45px;
-        font-size: 18px !important;
-        letter-spacing: 2px;
-        font-weight: 300 !important;
-        cursor: pointer;
-        margin-top: 30px;
-        font-family: neo, sans-serif;
-        transition: 0.25s;
-      }
-    }
-  }
-
-  .login-footer {
-    text-align: center;
+  .site-content__wrapper {
     position: absolute;
+    top: 0;
+    right: 0;
     bottom: 0;
-    padding: 20px;
-    color: rgba(255, 255, 255, 0.6);
-    p {
-      margin: 10px 0;
-    }
-    a {
-      padding: 0 5px;
-      color: rgba(255, 255, 255, 0.6);
-      &:focus,
-      &:hover {
-        color: #fff;
-      }
+    left: 0;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: transparent;
+  }
+
+  .site-content {
+    min-height: 100%;
+    padding: 30px 500px 30px 30px;
+  }
+
+  .brand-info {
+    margin: 220px 100px 0 90px;
+    color: black;
+  }
+
+  .brand-info__text {
+    margin: 0 0 22px 0;
+    font-size: 48px;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .brand-info__intro {
+    margin: 10px 0;
+    font-size: 16px;
+    line-height: 1.58;
+    opacity: .6;
+  }
+
+  .login-main {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 150px 60px 180px;
+    width: 470px;
+    min-height: 100%;
+    background-color: #fff;
+  }
+
+  .login-title {
+    display: inline-block;
+    vertical-align: middle;
+    //cursor: pointer;
+    font-size: 16px;
+    line-height: 43px;
+    color: #999999;
+  }
+
+  .login-title ~ .login-title {
+    margin-left: 10px;
+  }
+
+  .login-title.active {
+    font-weight: bold;
+    color: #3379EE;
+  }
+
+  .login-captcha {
+    overflow: hidden;
+
+    > img {
+      width: 100%;
+      cursor: pointer;
     }
   }
 
-  &-left,
-  &-right {
-    position: relative;
-    min-height: 500px;
-    align-items: center;
-    display: flex;
+  .login-btn-submit {
+    width: 100%;
+    margin-top: 38px;
   }
+}
 
-  @keyframes animate-down {
-    0%,
-    60%,
-    75%,
-    90%,
-    to {
-      animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    }
-    0% {
-      opacity: 0;
-      transform: translate3d(0, -3000px, 0);
-    }
-    60% {
-      opacity: 1;
-      transform: translate3d(0, 25px, 0);
-    }
-    75% {
-      transform: translate3d(0, -10px, 0);
-    }
-    90% {
-      transform: translate3d(0, 5px, 0);
-    }
-    to {
-      transform: none;
-    }
-  }
+.login-tag-verify {
+  margin-top: 25px
+}
 
-  .animate-down {
-    animation-name: animate-down;
-  }
+.login-type-row {
+  border-bottom: 1px solid #f5f5f5;
+  margin-bottom: 20px;
 }
 </style>
