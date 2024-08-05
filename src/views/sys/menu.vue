@@ -36,6 +36,8 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 弹窗, 新增 / 修改 -->
+    <add-or-update ref="addOrUpdateRef" @refreshDataList="getDataList"></add-or-update>
   </div>
 </template>
 
@@ -46,11 +48,13 @@ import baseService from "@/service/baseService";
 import {treeDataTranslate} from "@/utils/utils";
 import {IObject} from "@/types/interface";
 import {ElMessage, ElMessageBox} from "element-plus";
+import AddOrUpdate from './menu-add-or-update.vue'
 
 const dataForm = ref({})
 const dataList = ref<IObject[]>([])
 const addOrUpdateVisible = ref(false)
 const dataListLoading = ref(false)
+const addOrUpdateRef = ref()
 
 // 獲取數據列表
 const getDataList=()=>{
@@ -94,10 +98,10 @@ const deleteHandle = (id:String,menuName:String) =>{
   }).catch(()=>{})
 
 }
-const addOrUpdateHandle = (id : String) => {
+const addOrUpdateHandle = (id : number) => {
   addOrUpdateVisible.value = true
   nextTick(()=>{
-
+    addOrUpdateRef.value.init(id);
   })
 }
 onActivated(()=>{
