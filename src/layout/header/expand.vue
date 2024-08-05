@@ -73,10 +73,6 @@ export default defineComponent({
     const setLang = () => {
       var languageId = localStorage.getItem("languageId");
       var langCode = global.filterObj(langList.value, 'langTypeId', languageId).field1
-      console.log("{{{{{{{{{{{{{{{{")
-      console.log(languageId)
-      console.log(langCode)
-      console.log("{{{{{{{{{{{{{{{{")
       if (!langCode){
         //获取当前浏览器语言，生成本地仓库变量
         //保存到本地仓库
@@ -88,9 +84,6 @@ export default defineComponent({
         i18n.locale.value = langCode
       }
       lang.value = global.filterObj(langList.value,'field1',i18n.locale.value).langTypeId
-      console.log("{{{{{{{{{{{{{{{{")
-      console.log(lang.value)
-      console.log("{{{{{{{{{{{{{{{{")
       localStorage.setItem('languageId', lang.value);
       localStorage.setItem("langCode", i18n.locale.value);
       cookies.set('languageTypeCode', i18n.locale.value);

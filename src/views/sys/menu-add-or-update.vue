@@ -114,11 +114,14 @@ import baseService from "@/service/baseService";
 import {treeDataTranslate} from "@/utils/utils";
 import {IObject} from "@/types/interface";
 import {ary} from "lodash";
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 import {filterObj} from "@/utils/global_variable";
+import {useRouter} from "vue-router";
+import {useAppStore} from "@/store";
 const validateUrl = (rule: any, value: any, callback: any) => {
-  // let message = $t('modules.sys.menu-add-or-update.menu-url-empty')?
-  //   $t('modules.sys.menu-add-or-update.menu-url-empty'):"選單URL不能為空";
-  let message = "選單URL不能為空"
+  let message = t('modules.sys.menu-add-or-update.menu-url-empty')?
+    t('modules.sys.menu-add-or-update.menu-url-empty'):"選單URL不能為空";"選單URL不能為空"
   if (dataForm.value.menuType === '30' && !/\S/.test(value)) {
     callback(new Error(message))
   } else {
@@ -132,13 +135,13 @@ const dataForm = ref({
   menuId: 0,
   menuType: '30',
   typeList: [{
-    // name:$t('modules.sys.menu-add-or-update.typeList-key-10'),
+    name:t('modules.sys.menu-add-or-update.typeList-key-10'),
     key: '10'
   }, {
-    // name: $t('modules.sys.menu-add-or-update.typeList-key-20'),
+    name: t('modules.sys.menu-add-or-update.typeList-key-20'),
     key: '20'
   }, {
-    // name: $t('modules.sys.menu-add-or-update.typeList-key-30'),
+    name: t('modules.sys.menu-add-or-update.typeList-key-30'),
     key: '30'
   }],
   menuName: '',
@@ -168,10 +171,10 @@ const addOrUpdateVisible = ref(false)
 
 const dataRule = ref({
   menuName: [
-    // {required: true, message: $t('modules.sys.menu-add-or-update.dataRule-menuName'), trigger: 'blur'}
+    {required: true, message: t('modules.sys.menu-add-or-update.dataRule-menuName'), trigger: 'blur'}
   ],
   parentName: [
-    // {required: true, message: $t('modules.sys.menu-add-or-update.dataRule-parentName'), trigger: 'change'}
+    {required: true, message: t('modules.sys.menu-add-or-update.dataRule-parentName'), trigger: 'change'}
   ],
   url: [
     {validator: validateUrl, trigger: 'blur'}
@@ -256,8 +259,8 @@ const dataFormSubmit = () => {
       }).then((res) => {
         preventResubmitFlag.value = false
         if (res && res.resultCode === 200) {
-          let message = $t('modules.sys.menu-add-or-update.save-or-update-success') ?
-            $t('modules.sys.menu-add-or-update.save-or-update-success') : "操作成功";
+          let message = t('modules.sys.menu-add-or-update.save-or-update-success') ?
+            t('modules.sys.menu-add-or-update.save-or-update-success') : "操作成功";
 
           ElMessage.success({
             duration: 1500,

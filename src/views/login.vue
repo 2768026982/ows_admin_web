@@ -63,7 +63,7 @@
         </el-option>
       </el-select>
 
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" style="margin-top: 40px">
         <el-button @click="show()">{{t("common.login.dialog-1-cancel")}}</el-button>
         <el-button type="primary" :disabled="userDept === ''" @click="submitUserDept">{{t("common.login.dialog-1-submit")}}</el-button>
       </div>
@@ -141,8 +141,8 @@ const verify = ref({
   // 默认校验类型
   verifyType: "1",
   // 发送邮件按钮文字
-  // emailContent: this.$t("common.login.email-content"),
-  // phoneContent: this.$t("common.login.phone-content"),
+  emailContent: t("common.login.email-content"),
+  phoneContent: t("common.login.phone-content"),
   // 按钮倒计时
   emailCountDown: 120,
   phoneCountDown: 120,
