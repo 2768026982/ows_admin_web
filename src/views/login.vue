@@ -182,11 +182,9 @@ const getLoginLanguageList = () => {
         if (res.body != null){
           langList.value = res.body.records
           // localStorage.setItem('langList',res.body.records)
-          store.updateLoginLang(res.body.records)
           setLang()
         }
       }
-
     }).catch((error) => {
     console.error("Error fetching login language list:", error);
   });
@@ -359,7 +357,7 @@ initialize();
     width: 100%;
     height: 100%;
     content: "";
-    //background-image: url(~@/assets/img/index-bg.png);
+    background-image: url(~@/assets/images/index-bg.png);
     //background-image: url(~@/assets/img/index-banner-2.jpg);
     background-size: cover;
   }

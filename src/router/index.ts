@@ -14,6 +14,7 @@ import {
 import baseRoutes from "./base";
 import emits from "@/utils/emits";
 import { EMitt } from "@/constants/enum";
+import baseService from "@/service/baseService";
 
 interface dynamicRouteParams {
   path: string;
@@ -39,6 +40,12 @@ router.beforeEach((to, from, next) => {
   }
 
   const store = useAppStore();
+  baseService.post('sys/languageType/selectSysLanguageTypeList',{})
+    .then((res)=>{
+      if (res && res.resultCode === 200){
+        store.updateLangList(res.body.records)
+      }
+    })
 
   //token
   // const token = getToken()

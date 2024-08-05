@@ -54,9 +54,9 @@ export const useAppStore = defineStore("useAppStore", {
     updateLoginLang(data :any){
       this.state.adminOther.loginLang = data;
     },
-     updateLangList(state :any,langList :any){
+     updateLangList(langList :any){
       this.state.langList = langList
-      localStorage.setItem("langList",JSON.stringify(state.langList))
+      localStorage.setItem("langList",JSON.stringify(langList))
     },
     // initApp() {
     //   return Promise.all([
