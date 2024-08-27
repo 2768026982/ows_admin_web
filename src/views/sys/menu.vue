@@ -37,7 +37,7 @@
       </el-table-column>
     </el-table>
     <!-- 弹窗, 新增 / 修改 -->
-    <add-or-update ref="addOrUpdateRef" @refreshDataList="getDataList"></add-or-update>
+    <add-or-update ref="addOrUpdateRef" v-if="addOrUpdateVisible" @refreshDataList="getDataList"></add-or-update>
   </div>
 </template>
 
@@ -52,9 +52,11 @@ import AddOrUpdate from './menu-add-or-update.vue'
 
 const dataForm = ref({})
 const dataList = ref<IObject[]>([])
-const addOrUpdateVisible = ref(false)
+
 const dataListLoading = ref(false)
 const addOrUpdateRef = ref()
+const addOrUpdateVisible = ref(false)
+
 
 // 獲取數據列表
 const getDataList=()=>{
