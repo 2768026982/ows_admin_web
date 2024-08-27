@@ -50,9 +50,17 @@ export default (config: UserConfig): UserConfigExport => {
     server: {
       open: false, // 自动启动浏览器
       host: "0.0.0.0", // localhost
-      port: 8001, // 端口号
+      // port: 8001, // 端口号
       https: false,
-      hmr: { overlay: false }
+      hmr: { overlay: false },
+      proxy: {
+        '/api': {
+          target: 'http://192.168.18.200:50062/aiotek-server',
+          changeOrigin: true,
+          // 可选的配置
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        }
+      }
     }
   });
 };
