@@ -65,7 +65,7 @@
         layout="total, sizes, prev, pager, next, jumper">
       </el-pagination>
     </div>
-    <add v-if="addVisible" @addSuccess="addSuccess" ref="paramsSettingAdd"></add>
+    <add v-if="addVisible" @addSuccess="addSuccess" ref="paramsSettingAddRef"></add>  
   </div>
 </template>
 
