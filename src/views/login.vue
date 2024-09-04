@@ -2,6 +2,7 @@
   <div class="site-wrapper site-page--login">
     <div class="site-content__wrapper">
       <div class="site-content" style="background: transparent">
+        <div style="display: none">test001</div>
         <div class="brand-info">
           <!-- 品牌信息 -->
           <h2 class="brand-info__text">{{ t("common.login.brand-info-1") }}</h2>
