@@ -37,8 +37,8 @@
       <el-table-column prop="insertTime" header-align="center" align="center" width="180" :label="$t('modules.sys.role.table-column-5')"> </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="200" :label="$t('modules.sys.role.table-column-6')">
         <template v-slot="scope">
-          <el-button v-if="store.isAuth('sys:role:update')" link size="small" @click="addOrUpdateHandle(scope.row.roleId)"> {{ $t("modules.sys.role.table-column-6-update") }}</el-button>
-          <el-button v-if="store.isAuth('sys:role:delete')" link size="small" @click="deleteHandle(scope.row.roleId, scope.row.roleName)"> {{ $t("modules.sys.role.table-column-6-delete") }}</el-button>
+          <el-button v-if="store.isAuth('sys:role:update')" link type="primary" size="small" @click="addOrUpdateHandle(scope.row.roleId)"> {{ $t("modules.sys.role.table-column-6-update") }}</el-button>
+          <el-button v-if="store.isAuth('sys:role:delete')" link type="primary" size="small" @click="deleteHandle(scope.row.roleId, scope.row.roleName)"> {{ $t("modules.sys.role.table-column-6-delete") }}</el-button>
         </template>
       </el-table-column>
     </el-table>
