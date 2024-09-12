@@ -3,3 +3,11 @@ export interface RoleListParams {
     limit?: number;
     roleName?: string;
   }
+
+  export interface IMasterHttpResponse {
+    resultCode: number;
+    resultMessage: string;
+    body: any;
+    messageCode: string;
+    success: boolean;
+  }

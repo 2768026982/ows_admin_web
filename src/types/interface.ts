@@ -7,6 +7,7 @@ export interface IObject<T = any> {
 }
 
 export interface IHttpResponse {
+  data: boolean;
   resultCode: number;
   resultMessage: string;
   body: any;
