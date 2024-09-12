@@ -37,8 +37,8 @@
       <el-table-column prop="insertTime" header-align="center" align="center" width="180" :label="$t('modules.sys.role.table-column-5')"> </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="200" :label="$t('modules.sys.role.table-column-6')">
         <template v-slot="scope">
-          <el-button v-if="store.isAuth('sys:role:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.roleId)"> {{ $t("modules.sys.role.table-column-6-update") }}</el-button>
-          <el-button v-if="store.isAuth('sys:role:delete')" type="text" size="small" @click="deleteHandle(scope.row.roleId, scope.row.roleName)"> {{ $t("modules.sys.role.table-column-6-delete") }}</el-button>
+          <el-button v-if="store.isAuth('sys:role:update')" link size="small" @click="addOrUpdateHandle(scope.row.roleId)"> {{ $t("modules.sys.role.table-column-6-update") }}</el-button>
+          <el-button v-if="store.isAuth('sys:role:delete')" link size="small" @click="deleteHandle(scope.row.roleId, scope.row.roleName)"> {{ $t("modules.sys.role.table-column-6-delete") }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -55,7 +55,9 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { nextTick, onActivated, ref } from "vue";
 import roleAddOrUpdate from "./role-add-or-update.vue";
 import { useAppStore } from "@/store";
+import { useI18n } from "vue-i18n";
 // 数据
+const { t } = useI18n();
 let store = useAppStore();
 let dataForm = ref({
   roleName: ""
@@ -114,7 +116,7 @@ const currentChangeHandle = (val: number) => {
 };
 // 多选
 const selectionChangeHandle = (val: any) => {
-  dataListSelections = val;
+  dataListSelections.value = val;
 };
 // 新增 / 修改
 const addOrUpdateHandle = (id?: number) => {
@@ -125,11 +127,11 @@ const addOrUpdateHandle = (id?: number) => {
 const deleteHandle = (id: number, roleName: string) => {
   // var ids = id ? [id] : dataListSelections.value.map(item: any => item.roleId)
 
-  let message = $t("modules.sys.role.delete-confirm", { roleName: `${roleName}`, id: `${id ? "刪除" : "批量刪除"}` }) ? $t("modules.sys.role.delete-confirm", { roleName: `${roleName}`, id: `${id ? "刪除" : "批量刪除"}` }) : `確定對[角色名稱為${roleName}]進行[${id ? "刪除" : "批量刪除"}]操作?`;
-  let title = $t("modules.sys.role.delete-title") ? $t("modules.sys.role.delete-title") : "提示";
-  let confirm = $t("modules.sys.role.confirmButtonText") ? $t("modules.sys.role.confirmButtonText") : "確定";
-  let cancel = $t("modules.sys.role.cancelButtonText") ? $t("modules.sys.role.cancelButtonText") : "取消";
-  let success = $t("modules.sys.role.delete-success") ? $t("modules.sys.role.delete-success") : "操作成功";
+  let message = t("modules.sys.role.delete-confirm", { roleName: `${roleName}`, id: `${id ? "刪除" : "批量刪除"}` }) ? t("modules.sys.role.delete-confirm", { roleName: `${roleName}`, id: `${id ? "刪除" : "批量刪除"}` }) : `確定對[角色名稱為${roleName}]進行[${id ? "刪除" : "批量刪除"}]操作?`;
+  let title = t("modules.sys.role.delete-title") ? t("modules.sys.role.delete-title") : "提示";
+  let confirm = t("modules.sys.role.confirmButtonText") ? t("modules.sys.role.confirmButtonText") : "確定";
+  let cancel = t("modules.sys.role.cancelButtonText") ? t("modules.sys.role.cancelButtonText") : "取消";
+  let success = t("modules.sys.role.delete-success") ? t("modules.sys.role.delete-success") : "操作成功";
 
   ElMessageBox.confirm(message, title, {
     confirmButtonText: confirm,

@@ -13,9 +13,9 @@
       <el-table-column fixed="right" header-align="center" align="center" width="180" :label="$t('modules.sys.sysdept.table-column-4')">
         <template #default="scope">
           <!-- v-if="isAuth('sys:sysdept:update')" -->
-          <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.deptId)">{{ $t("modules.sys.sysdept.table-column-4-update") }}</el-button>
+          <el-button link size="small" @click="addOrUpdateHandle(scope.row.deptId)">{{ $t("modules.sys.sysdept.table-column-4-update") }}</el-button>
           <!-- v-if="isAuth('sys:sysdept:delete')" -->
-          <el-button type="text" size="small" @click="deleteHandle(scope.row.deptId, scope.row.name)">{{ $t("modules.sys.sysdept.table-column-4-delete") }}</el-button>
+          <el-button link size="small" @click="deleteHandle(scope.row.deptId, scope.row.name)">{{ $t("modules.sys.sysdept.table-column-4-delete") }}</el-button>
         </template>
       </el-table-column>
     </el-table>

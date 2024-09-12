@@ -33,13 +33,13 @@
           <el-form-item :label="$t('modules.sys.role-add-or-update.form-item-5')" prop="visibleBranches"
             label-width="40%">
             <el-select v-model="dataForm.visibleBranches">
-              <el-option v-for="item in global.visibleBranches" :key="item.value" :label="item.name"
+              <el-option v-for="item in global_variable.visibleBranches" :key="item.value" :label="item.name"
                 :value="item.value"> </el-option>
             </el-select>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item size="mini" :label="$t('modules.sys.role-add-or-update.form-item-6')" style="margin-left: 10%">
+      <el-form-item :label="$t('modules.sys.role-add-or-update.form-item-6')" style="margin-left: 10%">
         <div class="custom-tree-container">
           <el-tree :data="menuList" :props="menuListTreeProps" node-key="menuId" ref="menuListTreeRef"
             :default-expand-all="false" :check-strictly="true" show-checkbox> </el-tree>
@@ -63,8 +63,11 @@ import { RoleInfoParams } from "@/types/sys";
 import { treeDataTranslate } from "@/utils/utils";
 import { ElMessage } from "element-plus";
 import { nextTick, ref } from "vue";
+import global_variable from "@/utils/global_variable";
+import { useI18n } from "vue-i18n";
 
 const emit = defineEmits(["refreshDataList"]);
+const { t } = useI18n();
 // 数据区
 let dataFormRef = ref();
 let menuListTreeRef = ref();
@@ -89,11 +92,10 @@ let dataForm = ref({
 });
 let deptList = ref<IObject[]>([]);
 let dataRule = ref({
-  // roleName: [{ required: true, message: $t("modules.sys.role-add-or-update.dataRule-roleName"), trigger: "blur" }],
-  // deptId: [{ required: true, message: $t("modules.sys.role-add-or-update.dataRule-deptId"), trigger: "blur" }]
+  roleName: [{ required: true, message: t("modules.sys.role-add-or-update.dataRule-roleName"), trigger: "blur" }],
+  deptId: [{ required: true, message: t("modules.sys.role-add-or-update.dataRule-deptId"), trigger: "blur" }]
 });
 let showVisibleBranches = ref(false);
-let addOrUpdateVisible = ref(false);
 // 获取部门列表
 const getDeptList = async () => {
   try {
@@ -112,7 +114,7 @@ const init = async (id: number) => {
     getDeptList();
     // 同步获取菜单数据
     const data = await getMenuList();
-    menuList.value = treeDataTranslate(data.body, "menuId");
+    menuList.value = treeDataTranslate(data.body, "menuId", "parentId");
     visible.value = true;
     if (dataForm.value.id) {
       const resData = await getRoleInfo();
@@ -168,26 +170,9 @@ const dataFormSubmit = () => {
       }
 
       if (data && data.resultCode === 200) {
-
-        // ElMessageBox.confirm(message, title, {
-        //   confirmButtonText: confirm,
-        //   cancelButtonText: cancel,
-        //   type: "warning"
-        // }).then(async () => {
-        //   // 获取数据
-        //   const data = await deleteRoleData();
-        //   // 判断
-        //   if (data && data.resultCode === 200) {
-        //     ElMessage.success({
-        //       duration: 1500,
-        //       message: success,
-        //       onClose: () => getDataList()
-        //     });
-        //   }
-        // });
         ElMessage.success({
           duration: 1500,
-          message: $t("modules.sys.role-add-or-update.submit-success"),
+          message: t("modules.sys.role-add-or-update.submit-success"),
           onClose: () => {
             visible.value = false;
             emit("refreshDataList");
