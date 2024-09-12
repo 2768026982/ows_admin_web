@@ -19,6 +19,8 @@ import * as ElementPlusIcons from "@element-plus/icons-vue";
 import global from './utils/global_variable';
 import axios from "axios";
 import "virtual:svg-icons-register";
+// 自定义指令
+import reClickDirective from "./directive/reClick";
 
 const app = createApp(App);
 app.provide('$md5', md5);
@@ -26,6 +28,8 @@ app.provide('$md5', md5);
 Object.keys(ElementPlusIcons).forEach((iconName) => {
   app.component(iconName, ElementPlusIcons[iconName as keyof typeof ElementPlusIcons]);
 });
+// 添加自定义指令
+app.directive("reClick", reClickDirective);
 
 app
   .use(createPinia())
