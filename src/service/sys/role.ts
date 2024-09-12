@@ -1,9 +1,8 @@
-import { IHttpResponse } from "@/types/interface";
-import { RoleInfoParams, RoleListParams } from "@/types/sys";
+import { ISysHttpResponse, RoleInfoParams, RoleListParams } from "@/types/sys";
 
 // 获取列表数据----/sys/role/list get请求
-export const getRoleList = (params: RoleListParams): Promise<IHttpResponse> =>
-  Promise.resolve({
+export const getRoleList = (params: RoleListParams): Promise<ISysHttpResponse> => {
+  return Promise.resolve({
     resultCode: 200,
     resultMessage: "處理成功！",
     messageCode: "SUCCESS",
@@ -32,10 +31,11 @@ export const getRoleList = (params: RoleListParams): Promise<IHttpResponse> =>
     link: "",
     success: true
   });
+}
 
 // 获取权限数据----/sys/role/info/${id} post请求
-export const getRoleInfo = (): Promise<IHttpResponse> =>
-  Promise.resolve({
+export const getRoleInfo = (): Promise<ISysHttpResponse> => {
+  return Promise.resolve({
     resultCode: 200,
     resultMessage: "處理成功！",
     messageCode: "SUCCESS",
@@ -101,9 +101,10 @@ export const getRoleInfo = (): Promise<IHttpResponse> =>
     link: "",
     success: true
   });
+}
 
 // 删除列表数据----/sys/menu/delete/${id} post请求
-export const deleteRoleData = (): Promise<IHttpResponse> =>
+export const deleteRoleData = (): Promise<ISysHttpResponse> =>
   Promise.resolve({
     resultCode: 200,
     resultMessage: "處理成功！",
@@ -115,7 +116,7 @@ export const deleteRoleData = (): Promise<IHttpResponse> =>
   });
 
 // 新建权限数据----/sys/role/save post请求
-export const roleDataSave = (params: RoleInfoParams): Promise<IHttpResponse> => {
+export const roleDataSave = (params: RoleInfoParams): Promise<ISysHttpResponse> => {
   return Promise.resolve({
     resultCode: 200,
     resultMessage: "處理成功！",
@@ -126,8 +127,9 @@ export const roleDataSave = (params: RoleInfoParams): Promise<IHttpResponse> => 
     success: true
   });
 };
+
 // 更新权限数据----/sys/role/update post请求
-export const roleDataUpdate = (params: RoleInfoParams): Promise<IHttpResponse> => {
+export const roleDataUpdate = (params: RoleInfoParams): Promise<ISysHttpResponse> => {
   return Promise.resolve({
     resultCode: 200,
     resultMessage: "處理成功！",

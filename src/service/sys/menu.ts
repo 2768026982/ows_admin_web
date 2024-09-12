@@ -1,8 +1,8 @@
-import { IHttpResponse } from "@/types/interface";
+import { ISysHttpResponse } from "@/types/sys";
 
 // 获取菜单列表数据----/sys/menu/list get请求
-export const getMenuList = (): Promise<IHttpResponse> =>
-  Promise.resolve({
+export const getMenuList = (): Promise<ISysHttpResponse> => {
+  return Promise.resolve({
     resultCode: 200,
     resultMessage: "處理成功！",
     messageCode: "SUCCESS",
@@ -1044,3 +1044,4 @@ export const getMenuList = (): Promise<IHttpResponse> =>
     link: "",
     success: true
   });
+};
