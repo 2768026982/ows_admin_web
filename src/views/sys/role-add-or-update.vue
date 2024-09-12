@@ -117,7 +117,7 @@ const init = async (id: number) => {
     menuList.value = treeDataTranslate(data.body, "menuId", "parentId");
     visible.value = true;
     if (dataForm.value.id) {
-      const resData = await getRoleInfo();
+      const resData = await getRoleInfo(dataForm.value.id);
       if (resData && resData.resultCode === 200) {
         dataForm.value.roleName = data.body.roleName;
         dataForm.value.deptId = data.body.deptId;

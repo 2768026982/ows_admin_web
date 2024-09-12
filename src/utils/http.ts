@@ -83,7 +83,7 @@ const redirectLogin = () => {
   return;
 };
 
-export default (o: AxiosRequestConfig): Promise<IHttpResponse> => {
+export default (o: AxiosRequestConfig): Promise<any> => {
   return new Promise((resolve, reject) => {
     http(o)
       .then((res) => {

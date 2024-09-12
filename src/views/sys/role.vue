@@ -125,7 +125,8 @@ const addOrUpdateHandle = (id?: number) => {
 };
 // 刪除
 const deleteHandle = (id: number, roleName: string) => {
-  // var ids = id ? [id] : dataListSelections.value.map(item: any => item.roleId)
+  // 批量获取id数组
+  var ids = id ? [id] : dataListSelections.value.map((item: any) => item.roleId);
 
   let message = t("modules.sys.role.delete-confirm", { roleName: `${roleName}`, id: `${id ? "刪除" : "批量刪除"}` }) ? t("modules.sys.role.delete-confirm", { roleName: `${roleName}`, id: `${id ? "刪除" : "批量刪除"}` }) : `確定對[角色名稱為${roleName}]進行[${id ? "刪除" : "批量刪除"}]操作?`;
   let title = t("modules.sys.role.delete-title") ? t("modules.sys.role.delete-title") : "提示";
@@ -139,7 +140,7 @@ const deleteHandle = (id: number, roleName: string) => {
     type: "warning"
   }).then(async () => {
     // 获取数据
-    const data = await deleteRoleData();
+    const data = await deleteRoleData(ids);
     // 判断
     if (data && data.resultCode === 200) {
       ElMessage.success({
