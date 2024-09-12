@@ -36,27 +36,34 @@ export const useAppStore = defineStore("useAppStore", {
       tabs: [], //tab标签页集合
       activeTabName: "", //tab当前焦点页
       closedTabs: [], //存储已经关闭过的tab
-      basic:{
-       langList : localStorage.getItem('langList') ? JSON.parse(localStorage.getItem('langList') as string) : []
+      basic: {
+        langList: localStorage.getItem("langList")
+          ? JSON.parse(localStorage.getItem("langList") as string)
+          : []
       },
-      adminOther:{
-        loginLang : []
+      adminOther: {
+        loginLang: []
       }
     } as IObject
   }),
   actions: {
+    // 权限判断
+    isAuth(key: string) {
+      return this.state.permissions.includes(key);
+    },
+    // 更新状态
     updateState(data: IObject) {
       Object.keys(data).forEach((x: string) => {
         this.state[x] = data[x];
       });
     },
     //登入語言
-    updateLoginLang(data :any){
+    updateLoginLang(data: any) {
       this.state.adminOther.loginLang = data;
     },
-     updateLangList(langList :any){
-      this.state.langList = langList
-      localStorage.setItem("langList",JSON.stringify(langList))
+    updateLangList(langList: any) {
+      this.state.langList = langList;
+      localStorage.setItem("langList", JSON.stringify(langList));
     },
     // initApp() {
     //   return Promise.all([
@@ -82,12 +89,13 @@ export const useAppStore = defineStore("useAppStore", {
     initApp() {
       return Promise.all([
         baseService.get("/sys/menu/nav"), //加载菜单
-        baseService.get("/sys/user/info"), //加载用户信息
+        baseService.get("/sys/user/info") //加载用户信息
       ]).then(([menus, dicts]) => {
         const [routes, routeToMeta] = mergeServerRoute(menus.body.menuList || [], getSysRouteMap());
         this.updateState({
           routeToMeta: routeToMeta || {},
-          menus: []
+          menus: [],
+          permissions: menus.body.permissions
         });
         return routes;
       });

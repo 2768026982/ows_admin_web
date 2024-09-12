@@ -6,7 +6,7 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="search()">{{ $t("modules.sys.role.form-item-2-search-btn") }}</el-button>
-        <el-button type="primary" @click="addOrUpdateHandle()">{{ $t("modules.sys.role.form-item-2-save-btn") }}</el-button>
+        <el-button v-if="store.isAuth('sys:role:save')" type="primary" @click="addOrUpdateHandle()">{{ $t("modules.sys.role.form-item-2-save-btn") }}</el-button>
         <!--<el-button v-if="isAuth('sys:role:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量刪除</el-button>-->
       </el-form-item>
     </el-form>
@@ -37,8 +37,8 @@
       <el-table-column prop="insertTime" header-align="center" align="center" width="180" :label="$t('modules.sys.role.table-column-5')"> </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="200" :label="$t('modules.sys.role.table-column-6')">
         <template v-slot="scope">
-          <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.roleId)"> {{ $t("modules.sys.role.table-column-6-update") }}</el-button>
-          <el-button type="text" size="small" @click="deleteHandle(scope.row.roleId, scope.row.roleName)"> {{ $t("modules.sys.role.table-column-6-delete") }}</el-button>
+          <el-button v-if="store.isAuth('sys:role:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.roleId)"> {{ $t("modules.sys.role.table-column-6-update") }}</el-button>
+          <el-button v-if="store.isAuth('sys:role:delete')" type="text" size="small" @click="deleteHandle(scope.row.roleId, scope.row.roleName)"> {{ $t("modules.sys.role.table-column-6-delete") }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -54,7 +54,9 @@ import { deleteRoleData, getRoleList } from "@/service/sys/role";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { nextTick, onActivated, ref } from "vue";
 import roleAddOrUpdate from "./role-add-or-update.vue";
+import { useAppStore } from "@/store";
 // 数据
+let store = useAppStore();
 let dataForm = ref({
   roleName: ""
 });
