@@ -58,17 +58,17 @@
                 <el-table-column :label="$t('modules.merchant.base.function')" align="center" fixed="right"
                     min-width="150px">
                     <template v-slot="scope">
-                        <!-- <el-button plain type="primary" size="mini" @click="setHomePage(scope.row.webId)"
+                        <!-- <el-button plain type="primary" size="small" @click="setHomePage(scope.row.webId)"
                             v-if="scope.row.homePage !== '1'">
                             {{ $t('modules.official-site.webTemplateData.setHomePage') }}
                         </el-button> -->
-                        <el-button plain type="primary" size="mini" @click="setData(scope.row.webId)">
+                        <el-button plain type="primary" size="small" @click="setData(scope.row.webId)">
                             {{ $t('modules.official-site.webTemplateData.setData') }}
                         </el-button>
-                        <el-button plain type="primary" size="mini" @click="goPage(scope.row.webId)">
+                        <el-button plain type="primary" size="small" @click="goPage(scope.row.webId)">
                             {{ $t('modules.sys.currency.table-column-7-update') }}
                         </el-button>
-                        <el-button plain type="danger" size="mini" @click="delData(scope.row, scope.$index)">
+                        <el-button plain type="danger" size="small" @click="delData(scope.row, scope.$index)">
                             {{ $t('modules.official-site.web-master-list.deleted') }}
                         </el-button>
 
