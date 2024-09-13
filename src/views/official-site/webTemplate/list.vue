@@ -17,13 +17,15 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
-                <el-form-item style="text-align: right;">
-                    <el-button @click="search()">{{ $t('common.button.search') }}</el-button>
-                    <el-button type="primary" @click="add()">{{ $t('common.button.add') }}</el-button>
-                </el-form-item>
+                <el-row type="flex" justify="end">
+                    <el-form-item style="text-align: right;">
+                        <el-button @click="search()">{{ $t('common.button.search') }}</el-button>
+                        <el-button type="primary" @click="add()">{{ $t('common.button.add') }}</el-button>
+                    </el-form-item>
+                </el-row>
             </el-form>
         </div>
-      
+
 
         <div class="mt-8">
             <el-table :data="dataList" border stripe fit v-loading="dataListLoading" class="table_style"
@@ -72,6 +74,7 @@
 <script lang="ts" setup>
 import router from '@/router';
 import { getWebTemplateDel, getWebTemplateList, postWebTemplateStatus } from '@/service/web/web-template-list';
+import { WebTemplateModelItem } from '@/types/sys';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { template } from 'lodash';
 import { onMounted, reactive, ref } from 'vue';
@@ -89,7 +92,7 @@ const pageSize = ref(10)
 const totalPage = ref(0)
 const dataListLoading = ref(false)
 
-const stateList = [
+const stateList: WebTemplateModelItem[] = [
     {
         ID: "1",
         text: t("modules.official-site.common.enable"),
@@ -119,8 +122,6 @@ const getDataList = async () => {
         if (data && data.resultCode === 200) {
             dataList.value = data.body.list
             totalPage.value = data.body.totalCount
-            console.log("-------------------------"+dataList.value);
-            
         }
     } catch (error) {
         console.log(error);

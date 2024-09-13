@@ -117,3 +117,8 @@ export interface getWebTemplateModelListParams{
   page:number;
   limit:number;
 }
+
+export interface WebTemplateModelItem {
+  ID:string;
+  text:string;
+}

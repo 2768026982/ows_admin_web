@@ -114,8 +114,8 @@ export const getWebTemplateModelList = (params : getWebTemplateModelListParams):
     })
 }
 
-// 删除数据 -------------------------`/tmpMod/deleted/${id}` get请求
-export const getWebTemplateModelDel = (params: WebTemplateModelDelParams): Promise<WebTemplateModelDelList> => {
+// 删除数据 -------------------------`/tmpMod/deleted/${id}` get请求  params: WebTemplateModelDelParams
+export const getWebTemplateModelDel = (): Promise<WebTemplateModelDelList> => {
     return Promise.resolve({
         resultCode: 200,
         resultMessage: "處理成功！",
