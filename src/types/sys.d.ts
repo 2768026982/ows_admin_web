@@ -122,3 +122,103 @@ export interface WebTemplateModelItem {
   ID:string;
   text:string;
 }
+
+export interface UserRoleList {
+  resultCode:number;
+  resultMessage:string;
+  messageCode:string;
+  body:any;
+  records:any;
+  roleId:string;
+  roleName:string;
+  isValid:string;
+  insertDeptId:string;
+  insertTime:string;
+  participateAudit:string;
+  deptName:string;
+  visibleBranches:string;
+  success:boolean;
+}
+
+export interface UserDataList {
+  resultCode:number;
+  resultMessage:string;
+  messageCode:string;
+  body:any;
+  totalCount:number;
+  pageSize:number;
+  currPage:number;
+  records:any;
+  userId:string;
+  loginId:string;
+  userName:string;
+  telephone:string;
+  email:string;
+  isValid:number;
+  deptName:string;
+  roleName:string;
+  googleKey:string;
+  insertTime:string;
+  success:boolean;
+}
+
+export interface UserDataListParams {
+  page: number;
+  limit : number ;
+  userName : string;
+  loginId: string;
+  roleId: string;
+  deptId: string;
+  isValid: number;
+}
+
+export interface UserReset{
+  resultCode:number;
+  resultMessage:string;
+  messageCode:string;
+  success:boolean
+}
+
+export interface UserResetParams{
+  userId:string;
+}
+
+export interface UserDel {
+  resultCode:number;
+  resultMessage:string;
+  messageCode:string;
+  success:boolean;
+}
+
+export interface UserDelParams {
+  userIds:string;
+}
+
+export interface UserVal {
+  resultCode:number;
+  resultMessage:string;
+  messageCode:string;
+  success:boolean;
+}
+
+export interface UserValParams {
+  isValid:number;
+  userId:string;
+}
+
+export interface CompanyDataList {
+  resultCode:number;
+  resultMessage:string;
+  messageCode:string;
+  body:any;
+  records:any;
+  enterpriseCode:string;
+  parentCode:string;
+  name:string;
+  level:string;
+  success:boolean;
+}
+
+export interface CompanyDel{
+  resultCode:number;
+}
