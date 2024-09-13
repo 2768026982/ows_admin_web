@@ -32,3 +32,10 @@ export interface RoleInfoParams {
   contentList: any[];
   pcItemId: string;
 }
+
+export interface LanguageItemParams {
+  functionCode: string;
+  itemKey: string;
+  itemType: string;
+  pcItemId: string;
+}
