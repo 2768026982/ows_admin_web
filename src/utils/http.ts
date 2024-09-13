@@ -3,7 +3,7 @@ import { IHttpResponse, IObject } from "@/types/interface";
 import router from "@/router";
 import axios, { AxiosRequestConfig } from "axios";
 import qs from "qs";
-import {useCookies} from "vue3-cookies"
+import { useCookies } from "vue3-cookies"
 import { getToken } from "./cache";
 import { getValueByKeys } from "./utils";
 import { ElMessage } from "element-plus";
@@ -12,12 +12,12 @@ const http = axios.create({
   baseURL: app.api,
   timeout: app.requestTimeout
 });
-const {cookies} = useCookies();
+const { cookies } = useCookies();
 http.interceptors.request.use(
   function (config: any) {
     config.headers['token'] = cookies.get('token')
-    config.headers['languageTypeId'] = (localStorage.getItem("languageId")===undefined || localStorage.getItem("languageId")=== null?"":localStorage.getItem("languageId")) // 請求頭帶上語係languageTypeId
-    config.headers['languageTypeCode'] = (localStorage.getItem('langCode')===undefined || localStorage.getItem('langCode')=== null?"":localStorage.getItem('langCode')) // 請求頭帶上語係languageTypeCode
+    config.headers['languageTypeId'] = (localStorage.getItem("languageId") === undefined || localStorage.getItem("languageId") === null ? "" : localStorage.getItem("languageId")) // 請求頭帶上語係languageTypeId
+    config.headers['languageTypeCode'] = (localStorage.getItem('langCode') === undefined || localStorage.getItem('langCode') === null ? "" : localStorage.getItem('langCode')) // 請求頭帶上語係languageTypeCode
     config.headers["X-Requested-With"] = "XMLHttpRequest";
     config.headers["Request-Start"] = new Date().getTime();
     // const token = getToken();
@@ -39,7 +39,6 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   (response) => {
     // 响应成功
-    console.log(response.data.resultCode)
     if (response.data.resultCode === 200) {
       return response;
     }
@@ -84,7 +83,7 @@ const redirectLogin = () => {
   return;
 };
 
-export default (o: AxiosRequestConfig): Promise<IHttpResponse> => {
+export default (o: AxiosRequestConfig): Promise<any> => {
   return new Promise((resolve, reject) => {
     http(o)
       .then((res) => {

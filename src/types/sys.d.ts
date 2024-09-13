@@ -4,6 +4,15 @@ export interface RoleListParams {
   roleName?: string;
 }
 
+export interface ISysHttpResponse {
+  resultCode: number;
+  resultMessage: string;
+  body: any;
+  messageCode: string;
+  link: string;
+  success: boolean;
+}
+
 export interface IMasterHttpResponse {
   resultCode: number;
   resultMessage: string;
@@ -21,6 +30,13 @@ export interface RoleInfoParams {
   menuIdList: any[];
   visibleBranches: string;
   contentList: any[];
+  pcItemId: string;
+}
+
+export interface LanguageItemParams {
+  functionCode: string;
+  itemKey: string;
+  itemType: string;
   pcItemId: string;
 }
 

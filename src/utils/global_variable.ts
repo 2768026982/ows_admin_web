@@ -1,538 +1,571 @@
 // import $http from './httpRequest'
-import i18n from './lang'
-let langList = '';
+// import i18n from "./lang";
+
+const langList = "";
 //用戶狀態
-let userIsValid = [{
-  name: '啓用',
-  value: 1
-}, {
-  name: '禁用',
-  value: 0
-}];
-//問題類型
-let questionState = [
-//     {
-//   name: i18n.t('modules.accredit.list.license'),
-//   //'未處理',
-//   value: 0,
-//   color: 'danger'
-// },
+const userIsValid = [
   {
-  name: '待追蹤',
-  value: 1,
-  color: ''
-}, {
-  name: '待回覆',
-  value: 2,
-  color: ''
-}, {
-  name: '已接案',
-  value: 3,
-  color: 'success'
-}, {
-  name: '已指派',
-  value: 4,
-  color: 'success'
-}, {
-  name: '結案',
-  value: 5,
-  color: 'info'
-}];
+    name: "啓用",
+    value: 1
+  },
+  {
+    name: "禁用",
+    value: 0
+  }
+];
+//問題類型
+const questionState = [
+  //     {
+  //   name: i18n.t('modules.accredit.list.license'),
+  //   //'未處理',
+  //   value: 0,
+  //   color: 'danger'
+  // },
+  {
+    name: "待追蹤",
+    value: 1,
+    color: ""
+  },
+  {
+    name: "待回覆",
+    value: 2,
+    color: ""
+  },
+  {
+    name: "已接案",
+    value: 3,
+    color: "success"
+  },
+  {
+    name: "已指派",
+    value: 4,
+    color: "success"
+  },
+  {
+    name: "結案",
+    value: 5,
+    color: "info"
+  }
+];
 //優先度
-let priorityList = [{
-  name: '高',
-  value: 0,
-  color: 'danger'
-}, {
-  name: '中',
-  value: 1,
-  color: ''
-}, {
-  name: '低',
-  value: 2,
-  color: 'success'
-}];
+const priorityList = [
+  {
+    name: "高",
+    value: 0,
+    color: "danger"
+  },
+  {
+    name: "中",
+    value: 1,
+    color: ""
+  },
+  {
+    name: "低",
+    value: 2,
+    color: "success"
+  }
+];
 
 //排序方式
-var sortList = [{
-  name: '建立時間：由新到舊',
-  value: 0,
-}, {
-  name: '建立時間：由舊到新',
-  value: 1,
-}, {
-  name: '優先度：由高到低',
-  value: 2,
-}, {
-  name: '優先度：由低到高',
-  value: 3,
-}, {
-  name: '更新時間：由新到舊',
-  value: 4,
-}, {
-  name: '更新時間：由舊到新',
-  value: 5,
-}];
+const sortList = [
+  {
+    name: "建立時間：由新到舊",
+    value: 0
+  },
+  {
+    name: "建立時間：由舊到新",
+    value: 1
+  },
+  {
+    name: "優先度：由高到低",
+    value: 2
+  },
+  {
+    name: "優先度：由低到高",
+    value: 3
+  },
+  {
+    name: "更新時間：由新到舊",
+    value: 4
+  },
+  {
+    name: "更新時間：由舊到新",
+    value: 5
+  }
+];
 //帳號狀態
-var statusList = [{
-  name: '正式帳號',
-  code: '0',
-}, {
-  name: '測試帳號',
-  code: '1',
-}];
+const statusList = [
+  {
+    name: "正式帳號",
+    code: "0"
+  },
+  {
+    name: "測試帳號",
+    code: "1"
+  }
+];
 //性别
-var sexList = [{
-    name: '男',
-    value: '10',
+const sexList = [
+  {
+    name: "男",
+    value: "10"
   },
   {
-    name: '女',
-    value: '20',
+    name: "女",
+    value: "20"
   },
   {
-    name: '其它',
-    value: '30',
+    name: "其它",
+    value: "30"
   }
 ];
 //分公司可見
-var visibleBranches = [{
-  name: '不可見',
-  value: '0',
-}, {
-  name: '可見',
-  value: '1',
-}];
-
+const visibleBranches = [
+  {
+    name: "不可見",
+    value: "0"
+  },
+  {
+    name: "可見",
+    value: "1"
+  }
+];
 
 //-----------------------數位教程 start---------------------------
 // 課程下拉列表數據
-let lessonList = [{
-    key: '1',
-    value: 'Lesson 1'
+const lessonList = [
+  {
+    key: "1",
+    value: "Lesson 1"
   },
   {
-    key: '2',
-    value: 'Lesson 2'
+    key: "2",
+    value: "Lesson 2"
   },
   {
-    key: '3',
-    value: 'Lesson 3'
+    key: "3",
+    value: "Lesson 3"
   },
   {
-    key: '4',
-    value: 'Lesson 4'
+    key: "4",
+    value: "Lesson 4"
   },
   {
-    key: '5',
-    value: 'Lesson 5'
+    key: "5",
+    value: "Lesson 5"
   },
   {
-    key: '6',
-    value: 'Lesson 6'
+    key: "6",
+    value: "Lesson 6"
   },
   {
-    key: '7',
-    value: 'Lesson 7'
+    key: "7",
+    value: "Lesson 7"
   },
   {
-    key: '8',
-    value: 'Lesson 8'
+    key: "8",
+    value: "Lesson 8"
   },
   {
-    key: '9',
-    value: 'Lesson 9'
+    key: "9",
+    value: "Lesson 9"
   },
   {
-    key: '10',
-    value: 'Lesson 10'
+    key: "10",
+    value: "Lesson 10"
   },
   {
-    key: '11',
-    value: 'Lesson 11'
+    key: "11",
+    value: "Lesson 11"
   },
   {
-    key: '12',
-    value: 'Lesson 12'
+    key: "12",
+    value: "Lesson 12"
   },
   {
-    key: '13',
-    value: 'Lesson 13'
+    key: "13",
+    value: "Lesson 13"
   },
   {
-    key: '14',
-    value: 'Lesson 14'
+    key: "14",
+    value: "Lesson 14"
   },
   {
-    key: '15',
-    value: 'Lesson 15'
+    key: "15",
+    value: "Lesson 15"
   },
   {
-    key: '16',
-    value: 'Lesson 16'
+    key: "16",
+    value: "Lesson 16"
   },
   {
-    key: '17',
-    value: 'Lesson 17'
+    key: "17",
+    value: "Lesson 17"
   },
   {
-    key: '18',
-    value: 'Lesson 18'
+    key: "18",
+    value: "Lesson 18"
   },
   {
-    key: '19',
-    value: 'Lesson 19'
+    key: "19",
+    value: "Lesson 19"
   },
   {
-    key: '20',
-    value: 'Lesson 20'
+    key: "20",
+    value: "Lesson 20"
   },
   {
-    key: '21',
-    value: 'Lesson 21'
+    key: "21",
+    value: "Lesson 21"
   },
   {
-    key: '22',
-    value: 'Lesson 22'
+    key: "22",
+    value: "Lesson 22"
   },
   {
-    key: '23',
-    value: 'Lesson 23'
+    key: "23",
+    value: "Lesson 23"
   },
   {
-    key: '24',
-    value: 'Lesson 24'
+    key: "24",
+    value: "Lesson 24"
   },
   {
-    key: '25',
-    value: 'Lesson 25'
+    key: "25",
+    value: "Lesson 25"
   },
   {
-    key: '26',
-    value: 'Lesson 26'
+    key: "26",
+    value: "Lesson 26"
   },
   {
-    key: '27',
-    value: 'Lesson 27'
+    key: "27",
+    value: "Lesson 27"
   },
   {
-    key: '28',
-    value: 'Lesson 28'
+    key: "28",
+    value: "Lesson 28"
   },
   {
-    key: '29',
-    value: 'Lesson 29'
+    key: "29",
+    value: "Lesson 29"
   },
   {
-    key: '30',
-    value: 'Lesson 30'
+    key: "30",
+    value: "Lesson 30"
   },
   {
-    key: '31',
-    value: 'Lesson 31'
+    key: "31",
+    value: "Lesson 31"
   },
   {
-    key: '32',
-    value: 'Lesson 32'
+    key: "32",
+    value: "Lesson 32"
   },
   {
-    key: '33',
-    value: 'Lesson 33'
+    key: "33",
+    value: "Lesson 33"
   },
   {
-    key: '34',
-    value: 'Lesson 34'
+    key: "34",
+    value: "Lesson 34"
   },
   {
-    key: '35',
-    value: 'Lesson 35'
+    key: "35",
+    value: "Lesson 35"
   }
 ];
 // 等級下拉列表數據
-let levelList = [{
-    key: '1',
-    value: 'Level 1'
+const levelList = [
+  {
+    key: "1",
+    value: "Level 1"
   },
   {
-    key: '2',
-    value: 'Level 2'
+    key: "2",
+    value: "Level 2"
   },
   {
-    key: '3',
-    value: 'Level 3'
+    key: "3",
+    value: "Level 3"
   },
   {
-    key: '4',
-    value: 'Level 4'
+    key: "4",
+    value: "Level 4"
   },
   {
-    key: '5',
-    value: 'Level 5'
+    key: "5",
+    value: "Level 5"
   },
   {
-    key: '6',
-    value: 'Level 6'
+    key: "6",
+    value: "Level 6"
   },
   {
-    key: '7',
-    value: 'Level 7'
+    key: "7",
+    value: "Level 7"
   },
   {
-    key: '8',
-    value: 'Level 8'
+    key: "8",
+    value: "Level 8"
   },
   {
-    key: '9',
-    value: 'Level 9'
+    key: "9",
+    value: "Level 9"
   }
 ];
 /**
  * 確認狀態
  */
-let confirmStatusList = [{
-    key: '0',
-    value: '停用'
+const confirmStatusList = [
+  {
+    key: "0",
+    value: "停用"
   },
   {
-    key: '1',
-    value: '啟用'
-  },
+    key: "1",
+    value: "啟用"
+  }
 ];
-
 
 /**
  * 審核狀態
  */
-let auditStatusList = [{
-    key: '0',
-    value: '未審核'
+const auditStatusList = [
+  {
+    key: "0",
+    value: "未審核"
   },
   {
-    key: '2',
-    value: '審核通過'
+    key: "2",
+    value: "審核通過"
   },
   {
-    key: '3',
-    value: '審核不通過'
+    key: "3",
+    value: "審核不通過"
   }
 ];
 
-let structureTypeList = [{
-    key: '1',
-    value: '固定詞組'
+const structureTypeList = [
+  {
+    key: "1",
+    value: "固定詞組"
   },
   {
-    key: '2',
-    value: '句型結構'
+    key: "2",
+    value: "句型結構"
   }
 ];
 /**
  * 語係
  */
-let languageList = [{
-    key: 'eng',
-    value: '英文'
+const languageList = [
+  {
+    key: "eng",
+    value: "英文"
   },
   {
-    key: 'jpn',
-    value: '日文'
+    key: "jpn",
+    value: "日文"
   },
   {
-    key: 'th',
-    value: '泰文'
+    key: "th",
+    value: "泰文"
   },
   {
-    key: 'deu',
-    value: '德文'
+    key: "deu",
+    value: "德文"
   },
   {
-    key: 'esp',
-    value: '西班牙文'
+    key: "esp",
+    value: "西班牙文"
   },
   {
-    key: 'kor',
-    value: '韓文'
+    key: "kor",
+    value: "韓文"
   },
   {
-    key: 'fra',
-    value: '法文'
+    key: "fra",
+    value: "法文"
   },
   {
-    key: 'rus',
-    value: '俄文'
+    key: "rus",
+    value: "俄文"
   },
   {
-    key: 'ptb',
-    value: '葡萄牙語'
+    key: "ptb",
+    value: "葡萄牙語"
   },
   {
-    key: 'ita',
-    value: '義大利語'
+    key: "ita",
+    value: "義大利語"
   },
   {
-    key: 'csy',
-    value: '捷克文'
+    key: "csy",
+    value: "捷克文"
   },
   {
-    key: 'plk',
-    value: '波蘭語'
+    key: "plk",
+    value: "波蘭語"
   },
   {
-    key: 'trk',
-    value: '土耳其文'
+    key: "trk",
+    value: "土耳其文"
   },
   {
-    key: 'hun',
-    value: '匈牙利文'
+    key: "hun",
+    value: "匈牙利文"
   },
   {
-    key: 'cn',
-    value: '中文'
+    key: "cn",
+    value: "中文"
   }
 ];
-
-
 
 /**
  * 教程下拉列表
  */
-let levelTypeList = [{
-    key: 'NPC I',
-    value: 'NPC I'
+const levelTypeList = [
+  {
+    key: "NPC I",
+    value: "NPC I"
   },
   {
-    key: 'NPC II',
-    value: 'NPC II'
+    key: "NPC II",
+    value: "NPC II"
   },
   {
-    key: 'NPC III',
-    value: 'NPC III'
+    key: "NPC III",
+    value: "NPC III"
   },
   {
-    key: 'NPC IV',
-    value: 'NPC IV'
+    key: "NPC IV",
+    value: "NPC IV"
   },
   {
-    key: 'NICD II',
-    value: 'NICD II'
+    key: "NICD II",
+    value: "NICD II"
   },
   {
-    key: 'NICD II',
-    value: 'NICD II'
+    key: "NICD II",
+    value: "NICD II"
   },
   {
-    key: 'NICD III',
-    value: 'NICD III'
+    key: "NICD III",
+    value: "NICD III"
   },
   {
-    key: 'NICD IV',
-    value: 'NICD IV'
+    key: "NICD IV",
+    value: "NICD IV"
   }
 ];
 /**
  * 生字課程
  */
-let wordLevelTypeList = [{
-    key: 'NPC',
-    value: 'NPC'
+const wordLevelTypeList = [
+  {
+    key: "NPC",
+    value: "NPC"
   },
   {
-    key: 'NICD',
-    value: 'NICD'
+    key: "NICD",
+    value: "NICD"
   }
 ];
 /**
  * 語法點詞性內容
  */
-let partTypeList = [{
-    key: '1',
-    value: '必要生詞必要生词'
+const partTypeList = [
+  {
+    key: "1",
+    value: "必要生詞必要生词"
   },
   {
-    key: '2',
-    value: '必要生字'
+    key: "2",
+    value: "必要生字"
   },
   {
-    key: '3',
-    value: '必要句子'
+    key: "3",
+    value: "必要句子"
   },
   {
-    key: '4',
-    value: '必要詞性'
+    key: "4",
+    value: "必要詞性"
   },
   {
-    key: '5',
-    value: '非必要生詞'
+    key: "5",
+    value: "非必要生詞"
   },
   {
-    key: '6',
-    value: '非必要生字'
+    key: "6",
+    value: "非必要生字"
   },
   {
-    key: '7',
-    value: '非必要句子'
+    key: "7",
+    value: "非必要句子"
   },
   {
-    key: '8',
-    value: '非必要詞性'
+    key: "8",
+    value: "非必要詞性"
   },
   {
-    key: '9',
-    value: '標點符號'
+    key: "9",
+    value: "標點符號"
   },
   {
-    key: '10',
-    value: '任意字'
-  },
+    key: "10",
+    value: "任意字"
+  }
 ];
 /**
  * 標點符號
  */
-let punctuationList = [{
-    key: '。',
-    value: '。'
+const punctuationList = [
+  {
+    key: "。",
+    value: "。"
   },
   {
-    key: '?',
-    value: '?'
+    key: "?",
+    value: "?"
   },
   {
-    key: '!',
-    value: '!'
+    key: "!",
+    value: "!"
   },
   {
-    key: ',',
-    value: ','
+    key: ",",
+    value: ","
   },
   {
-    key: '、',
-    value: '、'
+    key: "、",
+    value: "、"
   },
   {
-    key: ';',
-    value: ';'
+    key: ";",
+    value: ";"
   },
   {
-    key: ':',
-    value: ':'
+    key: ":",
+    value: ":"
   },
   {
-    key: '......',
-    value: '......'
-  },
-
+    key: "......",
+    value: "......"
+  }
 ];
 
 /**
  * 是否展示
  */
-let showStatusList = [{
-    key: '0',
-    value: '否'
+const showStatusList = [
+  {
+    key: "0",
+    value: "否"
   },
   {
-    key: '1',
-    value: '是'
+    key: "1",
+    value: "是"
   }
 ];
 
@@ -541,10 +574,10 @@ let showStatusList = [{
  * @param value1 value2
  * */
 export function valueConcat(value1: string | undefined, value2: string | undefined) {
-  if ((value1 == '' || value1 == undefined) && value2 == '' || value2 == undefined) {
-    return '';
+  if (((value1 == "" || value1 == undefined) && value2 == "") || value2 == undefined) {
+    return "";
   }
-  return value1 + '(' + value2 + ')';
+  return value1 + "(" + value2 + ")";
 }
 
 /**
@@ -554,7 +587,7 @@ export function valueConcat(value1: string | undefined, value2: string | undefin
  *
  * */
 export function filterValue(ary: any[] | null, key: any) {
-  var value = "";
+  let value = "";
   if (ary != null && ary.length > 0) {
     ary.forEach((item, index) => {
       if (item.key == key) {
@@ -564,7 +597,7 @@ export function filterValue(ary: any[] | null, key: any) {
     });
   }
 
-  return value
+  return value;
 }
 
 //-----------------------數位教程 end---------------------------
@@ -574,7 +607,7 @@ export function filterValue(ary: any[] | null, key: any) {
  * @param text
  * */
 export function getFirstText(text: string | null) {
-  if (text != null && text !== '') {
+  if (text != null && text !== "") {
     return text.substr(0, 1);
   }
 }
@@ -583,8 +616,8 @@ export function getFirstText(text: string | null) {
  * @description 對象格式化 防止修改一個對象，另一個賦值的對象被修改；
  * @param obj 要格式化的對象
  * */
-export function formatObj(obj) {
-  return JSON.parse(JSON.stringify(obj))
+export function formatObj(obj: any) {
+  return JSON.parse(JSON.stringify(obj));
 }
 
 /**
@@ -593,41 +626,42 @@ export function formatObj(obj) {
  * @param key 篩選數組中要對應的key值
  * @param value 篩選條件 如果key的value值與 入參value相等 則返回該對象
  * */
-export function filterObj(ary: any[], key: string | number, value:any) {
-  var obj = {field1: '',
-    langTypeId: '',
-    langTypeName: '',
-    primeLanguage: ''};
-  if (ary != null && ary.length > 0 && value != '') {
-    ary.forEach((item:any) => {
+export function filterObj(ary: any[], key: string | number, value: any) {
+  let obj = {
+    field1: "",
+    langTypeId: "",
+    langTypeName: "",
+    primeLanguage: ""
+  };
+  if (ary != null && ary.length > 0 && value != "") {
+    ary.forEach((item: any) => {
       if (item[key] == value) {
         obj = item;
         return false;
       }
     });
   }
-  return obj
+  return obj;
 }
 
 export function filterObjGetIndex(ary: any[] | null, key: string | number, value: string) {
-  var obj = "";
-  if (ary != null && ary.length > 0 && value != '') {
+  let obj = "";
+  if (ary != null && ary.length > 0 && value != "") {
     ary.forEach((item, index) => {
       if (item[key] == value) {
-        obj = index+'';
+        obj = index + "";
         return false;
       }
     });
   }
 
-  return obj
+  return obj;
 }
 
 //tag使用：根據key 篩選出顯示的Name
 export function filter_forName(ary: any[] | null, key: string | number, value: string) {
-
-  var obj = "";
-  if (ary != null && ary.length > 0 && value != '') {
+  let obj = "";
+  if (ary != null && ary.length > 0 && value != "") {
     ary.forEach((item) => {
       if (item[key] == value) {
         obj = item;
@@ -635,12 +669,17 @@ export function filter_forName(ary: any[] | null, key: string | number, value: s
       }
     });
   }
-  return obj.name
+  return obj.name;
 }
 
-export function filter_forProp(ary: any[] | null, key: string | number, value: string, prop: string | number) {
-  var obj;
-  if (ary != null && ary.length > 0 && value != '') {
+export function filter_forProp(
+  ary: any[] | null,
+  key: string | number,
+  value: string,
+  prop: string | number
+) {
+  let obj;
+  if (ary != null && ary.length > 0 && value != "") {
     ary.forEach((item) => {
       if (item[key] == value) {
         obj = item[prop];
@@ -648,13 +687,13 @@ export function filter_forProp(ary: any[] | null, key: string | number, value: s
       }
     });
   }
-  return obj
+  return obj;
 }
 
 //tag使用：根據key 篩選出顯示的color
 export function filter_forColor(ary: any[] | null, key: string | number, value: string) {
-  var obj = "";
-  if (ary != null && ary.length > 0 && value != '') {
+  let obj = "";
+  if (ary != null && ary.length > 0 && value != "") {
     ary.forEach((item) => {
       if (item[key] == value) {
         obj = item;
@@ -662,7 +701,7 @@ export function filter_forColor(ary: any[] | null, key: string | number, value: 
       }
     });
   }
-  return obj.color
+  return obj.color;
 }
 
 /**
@@ -670,7 +709,7 @@ export function filter_forColor(ary: any[] | null, key: string | number, value: 
  * @param num 要格式化的數字
  * */
 export function numFormat(num: string | number) {
-  return num > 9 ? num : '0' + num;
+  return num > 9 ? num : "0" + num;
 }
 
 /**
@@ -678,18 +717,18 @@ export function numFormat(num: string | number) {
  * @param url:接口返回的文件路徑 XXX.png     fileName:文件名稱
  * */
 export function downLoadFile(url, fileName) {
-  var request = new XMLHttpRequest();
+  const request = new XMLHttpRequest();
   request.timeout = 30000;
   request.responseType = "blob";
   request.open("GET", url);
-  request.onload = function() {
-    var url = window.URL.createObjectURL(this.response);
-    var a = document.createElement("a");
+  request.onload = function () {
+    const url = window.URL.createObjectURL(this.response);
+    const a = document.createElement("a");
     document.body.appendChild(a);
     a.href = url;
     a.download = fileName;
     a.click();
-  }
+  };
   request.send();
 }
 
@@ -697,11 +736,11 @@ export function downLoadFile(url, fileName) {
  * @description 導出Excel
  * */
 export function exportFile(data: BlobPart, fileName: string, call: () => void) {
-  let blob = new Blob([data], {
-    type: 'application/xlsx'
+  const blob = new Blob([data], {
+    type: "application/xlsx"
   });
-  let url = window.URL.createObjectURL(blob)
-  const link = document.createElement('a');
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement("a");
   link.href = url;
   link.download = fileName;
   link.click();
@@ -711,34 +750,28 @@ export function exportFile(data: BlobPart, fileName: string, call: () => void) {
   }
 }
 export function exportFileByStream(data: BlobPart, fileName: string, type: any) {
-  let blob = new Blob([data], {
+  const blob = new Blob([data], {
     type: type
-  })
-  let url = window.URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.download = fileName
-  link.click()
-  URL.revokeObjectURL(url)
+  });
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = fileName;
+  link.click();
+  URL.revokeObjectURL(url);
 }
-
 
 /**
  * @description 文件大小  kb轉換為其他單位
  * @size 文件大小
  * */
 export function getFileSize(size: any) {
-  if (size <= 0)
-    return '';
-  var num = 1024.00; //byte
-  if (size < num)
-    return size + "B";
-  if (size < Math.pow(num, 2))
-    return (size / num).toFixed(1) + "K";
-  if (size < Math.pow(num, 3))
-    return (size / Math.pow(num, 2)).toFixed(1) + "M";
-  if (size < Math.pow(num, 4))
-    return (size / Math.pow(num, 3)).toFixed(1) + "G";
+  if (size <= 0) return "";
+  const num = 1024.0; //byte
+  if (size < num) return size + "B";
+  if (size < Math.pow(num, 2)) return (size / num).toFixed(1) + "K";
+  if (size < Math.pow(num, 3)) return (size / Math.pow(num, 2)).toFixed(1) + "M";
+  if (size < Math.pow(num, 4)) return (size / Math.pow(num, 3)).toFixed(1) + "G";
   return (size / Math.pow(num, 4)).toFixed(1) + "T";
 }
 /**
@@ -747,10 +780,10 @@ export function getFileSize(size: any) {
  * @param str
  */
 export function getFileName(str: string | null | undefined) {
-  if (str == '' || str == undefined || str == null) {
-    return '';
+  if (str == "" || str == undefined || str == null) {
+    return "";
   }
-  var index = str.lastIndexOf("\/");
+  const index = str.lastIndexOf("/");
   return str.substr(index + 1, str.length);
 }
 /**
@@ -759,22 +792,21 @@ export function getFileName(str: string | null | undefined) {
  * @param str
  */
 export function getFileUrl(str: string | null | undefined) {
-  if (str == '' || str == undefined || str == null) {
-    return '';
+  if (str == "" || str == undefined || str == null) {
+    return "";
   }
   // var index = str .lastIndexOf("\/");
   // return str .substring(index + 1, str.length-4);
-  let urls = str.split("/");
+  const urls = str.split("/");
   // 獲取文件名並拆分
-  let fileNames = urls[urls.length - 1].split(".");
+  const fileNames = urls[urls.length - 1].split(".");
   return fileNames[0];
 }
 
-
 //將對象中的一個字段提取變成一個數組
 export function getAry_forProp(list: string | any[], prop: string | number) {
-  var ary = [];
-  for (var i = 0; i < list.length; i++) {
+  const ary = [];
+  for (let i = 0; i < list.length; i++) {
     ary.push(list[i][prop]);
   }
   return ary;
@@ -784,13 +816,13 @@ export function getAry_forProp(list: string | any[], prop: string | number) {
  * @param list
  */
 export function getString_FromArray(list: any[] | null) {
-  var string = '';
+  let string = "";
   if (list != null && list.length > 0) {
     list.forEach((item, i) => {
       string += item;
       //最後一個後面不要拼逗號
       if (i != list.length - 1) {
-        string += ',';
+        string += ",";
       }
     });
   }
@@ -801,13 +833,13 @@ export function getString_FromArray(list: any[] | null) {
  * @param list
  */
 export function getString_FromArray3(list: any[] | null) {
-  var string = '';
+  let string = "";
   if (list != null && list.length > 0) {
     list.forEach((item, i) => {
       string += item;
       //最後一個後面不要拼分號
       if (i != list.length - 1) {
-        string += ';';
+        string += ";";
       }
     });
   }
@@ -820,12 +852,12 @@ export function getString_FromArray3(list: any[] | null) {
  * @param prop
  */
 export function getString_FromArray2(list: string | any[] | null, prop: string | number) {
-  var string = '';
+  let string = "";
   if (list != null && list.length > 0) {
-    for (var i = 0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i++) {
       string += list[i][prop];
       if (i != list.length - 1) {
-        string += ';';
+        string += ";";
       }
     }
   }
@@ -837,9 +869,9 @@ export function getString_FromArray2(list: string | any[] | null, prop: string |
  * @param punctuation
  */
 export function getArray_FromString(str: string | null | undefined, punctuation: any) {
-  var value = '';
-  if (str != null && str != undefined && str != '') {
-    value = str.split(punctuation)
+  let value = "";
+  if (str != null && str != undefined && str != "") {
+    value = str.split(punctuation);
   }
   return value;
 }
@@ -849,8 +881,10 @@ export function getArray_FromString(str: string | null | undefined, punctuation:
  * @param str
  * @returns {Array}
  */
-export function getArraySplitFour(str: { trim: () => { (): any; new(): any; match: { (arg0: RegExp): never[]; new(): any; }; }; }) {
-  var array = [];
+export function getArraySplitFour(str: {
+  trim: () => { (): any; new (): any; match: { (arg0: RegExp): never[]; new (): any } };
+}) {
+  let array = [];
   array = str.trim().match(/.{1,4}/g) || [];
   return array;
 }
@@ -943,7 +977,7 @@ export function getArraySplitFour(str: { trim: () => { (): any; new(): any; matc
 // }
 //仅下载
 export function getFileByBlobUrl(blobUrl: string, fileName: string, call: () => void) {
-  const link = document.createElement('a');
+  const link = document.createElement("a");
   link.href = blobUrl;
   link.download = fileName;
   link.click();
@@ -1016,7 +1050,6 @@ export function isEmpty(val: string | any[] | null | undefined) {
     } else {
       return false;
     }
-
   }
 }
 /**
@@ -1028,7 +1061,12 @@ export function isEmpty(val: string | any[] | null | undefined) {
  * @param start
  * @param end
  * */
-export function formatRangeTime(range: string | any[] | null, obj: { [x: string]: any; }, start: string | number, end: string | number) {
+export function formatRangeTime(
+  range: string | any[] | null,
+  obj: { [x: string]: any },
+  start: string | number,
+  end: string | number
+) {
   if (range == null || range.length === 0) {
     obj[start] = "";
     obj[end] = "";
@@ -1042,7 +1080,7 @@ export function formatRangeTime(range: string | any[] | null, obj: { [x: string]
  * 删除当条数据后是否需要返回上一页
  * @param param 表格数据对象
  */
-export function hasReturnToPreviousPage(param: { tableList: string | any[]; pageIndex: number; }) {
+export function hasReturnToPreviousPage(param: { tableList: string | any[]; pageIndex: number }) {
   const currentTableLength = param.tableList.length;
   // 如果当前table list 的长度为1 则表示 当前被删除的数据为 当前页最后一条数据
   if (currentTableLength === 1 && param.pageIndex > 1) {
@@ -1057,8 +1095,8 @@ export function hasReturnToPreviousPage(param: { tableList: string | any[]; page
  * @param value 需要校验的字段名
  * @param rule 正则
  */
-export function keyupClear(obj: { [x: string]: string; }, value: string | number, rule: any) {
-  obj[value] = obj[value].replace(rule, '');
+export function keyupClear(obj: { [x: string]: string }, value: string | number, rule: any) {
+  obj[value] = obj[value].replace(rule, "");
 }
 
 export default {
@@ -1110,6 +1148,6 @@ export default {
   visibleBranches,
   formatRangeTime,
   hasReturnToPreviousPage,
-  keyupClear,
+  keyupClear
   // getFileByResourceId
-}
+};
