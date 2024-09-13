@@ -104,11 +104,10 @@
 </template>
 
 <script setup lang="ts">
-import router from '@/router';
 import { deleteLanguageData, getLanguageList, getSysLangageType } from '@/service/sys/language';
 import { useAppStore } from '@/store';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { nextTick, onActivated, ref } from 'vue';
+import { onActivated, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import sysDictionaryAdd from './sys-dictionary-add.vue';
 import sysDictionaryUpdate from './sys-dictionary-update.vue';
@@ -117,10 +116,12 @@ import sysDictionaryUpdate from './sys-dictionary-update.vue';
 const appStore = useAppStore();
 // 登录语言
 const { t } = useI18n();
-// 表单
-let addVisible = ref(false);
+// refs
 const dataFormRef = ref();
 const internationalRef = ref();
+// 是否可见
+let addVisible = ref(false);
+// 表单
 const dataForm = ref({
   // 功能代碼
   functionCode: '',
