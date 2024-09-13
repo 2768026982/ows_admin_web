@@ -98,9 +98,8 @@
         layout="total, sizes, prev, pager, next, jumper">
       </el-pagination>
     </div>
-    <!--国际化共通页面-->
-    <!-- <international ref="international" :functionCode="table.functionCode" :itemType="table.itemType"
-                   :itemKey="table.itemKey" @refreshList="getTableList"></international> -->
+    <sysDictionaryAdd :visible="addVisible" @closeDialog="closeDialog"></sysDictionaryAdd>
+    <sysDictionaryUpdate ref="internationalRef" @refreshList="getTableList"></sysDictionaryUpdate>
   </div>
 </template>
 
@@ -109,15 +108,19 @@ import router from '@/router';
 import { deleteLanguageData, getLanguageList, getSysLangageType } from '@/service/sys/language';
 import { useAppStore } from '@/store';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { onBeforeMount, ref } from 'vue';
+import { nextTick, onActivated, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import sysDictionaryAdd from './sys-dictionary-add.vue';
+import sysDictionaryUpdate from './sys-dictionary-update.vue';
 
 // 状态数据
 const appStore = useAppStore();
 // 登录语言
 const { t } = useI18n();
 // 表单
+let addVisible = ref(false);
 const dataFormRef = ref();
+const internationalRef = ref();
 const dataForm = ref({
   // 功能代碼
   functionCode: '',
@@ -131,15 +134,6 @@ const dataForm = ref({
   languageContent: '',
   // 缺失語言
   languageLack: ''
-});
-// 表格数据
-const table = ref({
-  // 功能代碼
-  functionCode: '',
-  // 項目類型
-  itemType: '',
-  // 項目編號
-  itemKey: ''
 });
 // 表格数据列表
 const tableList = ref([]);
@@ -171,6 +165,10 @@ const getTableList = async (page?: number) => {
     dataListLoading.value = false;
   }
 }
+// 关闭页面
+const closeDialog = () => {
+  addVisible.value = false;
+}
 // 修改頁數大小
 const sizeChangeHandle = (val: number) => {
   pageSize.value = val;
@@ -185,17 +183,11 @@ const currentChangeHandle = (val: number) => {
 // 新建/修改
 const addData = (row?: any) => {
   if (row) {
-    // 功能代碼
-    table.value.functionCode = row.functionCode;
-    // 項目類型
-    table.value.itemType = row.itemType;
-    // 項目編號
-    table.value.itemKey = row.itemKey;
     // 修改 ---共通國際化頁面
-    // nextTick(() => $refs['international'].init());
+    internationalRef.value.init(row);
   } else {
     // 新增
-    router.push({ name: 'sys-dictionary-add' });
+    addVisible.value = true;
   }
 }
 // 重置查詢條件
@@ -252,7 +244,7 @@ const getLists = async () => {
   getTableList();
 }
 // 生命周期函数
-onBeforeMount(() => getLists());
+onActivated(() => getLists());
 </script>
 
 <style scoped lang="scss">
