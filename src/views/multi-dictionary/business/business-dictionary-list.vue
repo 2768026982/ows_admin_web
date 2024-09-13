@@ -4,7 +4,7 @@
     <!-- 查詢表單 -->
     <div>
       <el-form ref="dataFormRef" :model="dataForm" label-width="80px">
-        <el-row type="flex" justify="space-between">
+        <el-row type="flex" justify="space-between" style="margin-bottom: 10px;">
           <el-col :span="6">
             <el-form-item :label="$t('modules.multi-dictionary.sys.sys-dictionary-list.form-item-1')"
               prop="functionCode">
@@ -179,6 +179,7 @@ const getTableList = async (page?: number) => {
 // 关闭页面
 const closeDialog = () => {
   addVisible.value = false;
+  getTableList();
 }
 // 修改頁數大小
 const sizeChangeHandle = (val: number) => {

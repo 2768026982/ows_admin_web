@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="title" v-model="props.visible" :before-close="beforeClose">
+  <el-dialog :title="title" v-model="props.visible" @closed="dialogClose">
     <el-form ref="dicFormRef" :label-position="'right'" v-loading="dataLoading" :model="dataForm" :rules="rules">
       <el-row type="flex" justify="space-around">
         <el-col :span="10">
@@ -140,7 +140,8 @@ const rules = ref({
   ]
 });
 // 关闭
-const beforeClose = () => {
+const dialogClose = () => {
+  dicFormRef.value.resetFields();
   emit('closeDialog');
 }
 // 获取列表数据
@@ -176,10 +177,7 @@ const save = () => {
         ElMessage.success({
           duration: 1500,
           message,
-          onClose: () => {
-            dicFormRef.value.resetFields();
-            router.push({ name: 'multi-dictionary-sys/sys-dictionary-list' });
-          }
+          onClose: () => dialogClose()
         });
       }
     }
