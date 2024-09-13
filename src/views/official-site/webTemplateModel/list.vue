@@ -1,5 +1,3 @@
-
-
 <template>
     <div class="basic member">
         <div>
@@ -19,10 +17,12 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
-                <el-form-item style="text-align: right;">
-                    <el-button @click="search()">{{ $t('common.button.search') }}</el-button>
-                    <el-button type="primary" @click="add()">{{ $t('common.button.add') }}</el-button>
-                </el-form-item>
+                <el-row type="flex" justify="end">
+                    <el-form-item style="text-align: right;">
+                        <el-button @click="search()">{{ $t('common.button.search') }}</el-button>
+                        <el-button type="primary" @click="add()">{{ $t('common.button.add') }}</el-button>
+                    </el-form-item>
+                </el-row>
             </el-form>
         </div>
 
@@ -85,7 +85,7 @@ const { t } = useI18n()
 const dataForm = reactive({
     tmpName: '',
     isValid: '',
-    modName:''
+    modName: ''
 })
 
 const dataList = ref([])
@@ -94,7 +94,7 @@ const pageSize = ref(10)
 const totalPage = ref(0)
 const dataListLoading = ref(false)
 
-const stateList:WebTemplateModelItem[] = 
+const stateList: WebTemplateModelItem[] =
     [
         {
             ID: "1",
@@ -127,9 +127,6 @@ const getDataList = async () => {                          //async添加的合�
         if (data && data.resultCode === 200) {
             dataList.value = data.body.list
             totalPage.value = data.body.totalCount
-            console.log(dataList.value);
-            console.log("++++++++++++++++++++++++++++++++++"+data.body.list[0].modName);
-            
         }
 
     } catch (error) {
@@ -156,7 +153,7 @@ const add = () => {
     router.push({
         name: 'webTemplateModel-addOrUpdate',
         query: {
-            
+
         }
     })
 }
@@ -164,13 +161,13 @@ const add = () => {
 const updateTemplate = (id: string) => {
     router.push({
         name: 'webTemplateModel-addOrUpdate',
-          query: {
+        query: {
             id: id
-          }
+        }
     })
 }
 
-const copyAdd = (id : string) => {
+const copyAdd = (id: string) => {
     router.push({
         name: 'webTemplateModel-copyAdd',
         query: {
@@ -195,11 +192,11 @@ const deleteTemplate = (id: string, name: string) => {
         }
     ).then(async () => {
         const data = await getWebTemplateModelDel()
-        if(data && data.resultCode === 200) {
+        if (data && data.resultCode === 200) {
             ElMessage({
-                message:t("modules.official-site.common.deleteSuccess"),
-                type:'success' ,
-                duration:1500 ,
+                message: t("modules.official-site.common.deleteSuccess"),
+                type: 'success',
+                duration: 1500,
                 onClose: () => {
                     getDataList()
                 }
@@ -210,18 +207,18 @@ const deleteTemplate = (id: string, name: string) => {
 }
 
 //改变状态
-const changeVal = async(id:string , status: string ) => {
+const changeVal = async (id: string, status: string) => {
     let newForm = reactive({
-        modId: id , 
+        modId: id,
         status: status,
     })
     const data = await postWebTemplateModelStatus(newForm)
-    if(data && data.resultCode === 200) {
+    if (data && data.resultCode === 200) {
         let success = t('modules.official-site.webTemplateModel.reqSuccess');
         ElMessage({
-            message: success?success:'操作成功',
-            type : 'success' ,
-            duration : 1500 ,
+            message: success ? success : '操作成功',
+            type: 'success',
+            duration: 1500,
             onClose: () => {
                 getDataList();
             }
@@ -229,7 +226,7 @@ const changeVal = async(id:string , status: string ) => {
     }
 }
 
-onMounted(()=>{
+onMounted(() => {
     getDataList();
 })
 </script>
