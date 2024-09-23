@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     :title="!dataForm.id ? t('modules.sys.sysdept-add-or-update.save') : t('modules.sys.sysdept-add-or-update.update')"
-    :close-on-click-modal="false" :visible.sync="visible">
+    :close-on-click-modal="false" v-model="visible">
     <el-form :model="dataForm" :rules="dataRule" ref="dataFormRef" @keyup.enter.native="dataFormSubmit()"
       label-width="23%">
       <el-form-item :label="t('modules.sys.sysdept-add-or-update.form-item-1')" prop="name">
@@ -36,7 +36,7 @@
       <el-button type="primary" @click="dataFormSubmit()" v-re-click>{{
         t('modules.sys.sysdept-add-or-update.submit-btn') }}</el-button>
     </span>
-    
+
   </el-dialog>
 </template>
 
@@ -103,14 +103,18 @@ const init = (id: any) => {
       })
     })
     .then(() => {
+    console.log(user.value)
       if (!dataForm.id) {
-        console.log(user.value)
+
         dataForm.disabled = false
-        baseService.get(`/sys/sysdept/info/${user.value.deptId}`)
+        if(user.value.deptId){
+          baseService.get(`/sys/sysdept/info/${user.value.deptId}`)
           .then((data) => {
             dataForm.parentId = data.body.deptId
             deptListTreeSetCurrentNode()
           })
+        }
+
       } else {
         // 修改
         console.log('修改')
@@ -192,8 +196,8 @@ const setBusinessCode = () => {
   })
 }
 
-// const setContentList = (obj:object) => { 
-//   let that = 
+// const setContentList = (obj:object) => {
+//   let that =
 //   let lis
 // }
 

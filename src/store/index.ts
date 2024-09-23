@@ -95,7 +95,8 @@ export const useAppStore = defineStore("useAppStore", {
         this.updateState({
           routeToMeta: routeToMeta || {},
           menus: [],
-          permissions: menus.body.permissions
+          permissions: menus.body.permissions,
+          user:dicts.body
         });
         return routes;
       });
