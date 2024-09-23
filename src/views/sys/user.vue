@@ -36,7 +36,7 @@
                         <template v-slot="scope">
                             <el-button @click="search()">{{ $t('modules.sys.user.search-btn') }}</el-button>
                             <el-button v-if="store.isAuth('sys:user:save')" type="primary"
-                                @click="addOrUpdateHandle(scope.row.userId, scope.row.deptId)">
+                                @click="addOrUpdateHandle">
                                 {{ $t('modules.sys.user.submit-btn') }}
                             </el-button>
                             <el-button v-if="store.isAuth('sys:user:delete')" type="primary" @click="deleteById()">
@@ -241,7 +241,7 @@ const selectionChangeHandle = (val: { map: (arg0: (item: any) => any) => never[]
 const addOrUpdate = ref();
 
 // 新增/修改
-const addOrUpdateHandle = (id: string, deptId: string) => {
+const addOrUpdateHandle = (id: number, deptId: string) => {
     addOrUpdateVisible.value = true
     nextTick(() => {
         if (addOrUpdate.value && addOrUpdate.value.init) {
