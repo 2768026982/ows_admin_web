@@ -2,28 +2,28 @@
   <div class="mod-menu">
     <el-form :inline="true" :model="dataForm">
       <el-form-item>
-        <el-button v-if="store.isAuth('sys:sysdept:save')" type="primary" @click="addOrUpdateHandle()">{{ $t("modules.sys.sysdept.form-item-btn") }}</el-button>
+        <el-button v-if="store.isAuth('sys:sysdept:save')" type="primary" @click="addOrUpdateHandle()">{{ t("modules.sys.sysdept.form-item-btn") }}</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="dataList" row-key="deptId" border default-expand-all style="width: 100%">
       <el-table-column prop="name" header-align="center" min-width="40%"
-        :label="$t('modules.sys.sysdept.table-column-1')"> </el-table-column>
+        :label="t('modules.sys.sysdept.table-column-1')"> </el-table-column>
       <el-table-column prop="parentName" header-align="center" align="center" min-width="10%"
-        :label="$t('modules.sys.sysdept.table-column-2')"> </el-table-column>
+        :label="t('modules.sys.sysdept.table-column-2')"> </el-table-column>
       <el-table-column prop="orderNum" header-align="center" align="center" min-width="10%"
-        :label="$t('modules.sys.sysdept.table-column-3')"> </el-table-column>
+        :label="t('modules.sys.sysdept.table-column-3')"> </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="180"
-        :label="$t('modules.sys.sysdept.table-column-4')">
+        :label="t('modules.sys.sysdept.table-column-4')">
         <template v-slot="scope">
           <el-button v-if="store.isAuth('sys:sysdept:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.deptId)">{{
-            $t("modules.sys.sysdept.table-column-4-update") }}</el-button>
+            t("modules.sys.sysdept.table-column-4-update") }}</el-button>
           <el-button v-if="store.isAuth('sys:sysdept:delete')" type="text" size="small" @click="deleteHandle(scope.row.deptId, scope.row.name)">{{
-            $t("modules.sys.sysdept.table-column-4-delete") }}</el-button>
+            t("modules.sys.sysdept.table-column-4-delete") }}</el-button>
         </template>
       </el-table-column>
     </el-table>
     <!-- 弹窗, 新增 / 修改 -->
-    <!-- <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update> -->
+    <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdateRef" @refreshDataList="getDataList"></add-or-update>
   </div>
 </template>
 
@@ -33,7 +33,14 @@ import baseService from "@/service/baseService";
 import { treeDataTranslate } from "@/utils/utils";
 import { ref, nextTick, onMounted } from "vue";
 import { IObject } from "@/types/interface";
-// import AddOrUpdate from "./sysdept-add-or-update.vue";
+import AddOrUpdate from './sysdept-add-or-update.vue'
+
+// const dynamicPath = "./sysdept-add-or-update.vue"
+// import (dynamicPath /* @vite-ignore */).then((module) => {
+//   AddOrUpdate
+// }).catch((error) => {
+//   console.error('动态导入失败' , error);
+// })
 
 import { useI18n } from "vue-i18n";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -44,7 +51,7 @@ const dataForm = ref({});
 const dataList = ref<IObject[]>([]);
 const dataListLoading = ref(false);
 const addOrUpdateVisible = ref(false);
-const addOrUpdate = ref();
+const addOrUpdateRef = ref();
 
 // 获取数据列表
 const getDataList = () => {
@@ -57,10 +64,10 @@ const getDataList = () => {
 };
 
 // 新增 / 修改
-const addOrUpdateHandle = (id?: string) => {
+const addOrUpdateHandle = (id?: any) => {
   addOrUpdateVisible.value = true;
   nextTick(() => {
-    addOrUpdate.value.init(id);
+    addOrUpdateRef.value.init(id);
   });
 };
 
