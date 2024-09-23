@@ -21,10 +21,13 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="4" :offset="7">
+
                         <el-button @click="search()">{{ $t('modules.sys.currency.search-btn') }}</el-button>
-                        <!-- @click="search()" -->
-                        <el-button type="primary">{{ $t('modules.sys.currency.add-btn') }}</el-button>
-                        <!-- @click="goPage()" -->
+
+                        <el-button type="primary" @click="addOrUpdateHandle(webId)">{{
+                            $t('modules.sys.currency.add-btn') }}</el-button>
+
+
                     </el-col>
                 </el-row>
             </el-form>
@@ -65,7 +68,7 @@
                         <el-button plain type="primary" size="small" @click="setData(scope.row.webId)">
                             {{ $t('modules.official-site.webTemplateData.setData') }}
                         </el-button>
-                        <el-button plain type="primary" size="small" @click="goPage(scope.row.webId)">
+                        <el-button plain type="primary" size="small" @click="addOrUpdateHandle(scope.row.webId)">
                             {{ $t('modules.sys.currency.table-column-7-update') }}
                         </el-button>
                         <el-button plain type="danger" size="small" @click="delData(scope.row, scope.$index)">
@@ -79,25 +82,35 @@
                 :size="size" layout="total, sizes, prev, pager, next, jumper" :total="totalPage"
                 @size-change="handleSizeChange" @current-change="handleCurrentChange" />
         </div>
-        <!-- <webMasterAddOrUpdate ref="webMasterAddOrUpdate" v-if="webMasterAddOrUpdateFlg"
-                            @refreshList="search()">
-      </webMasterAddOrUpdate> -->
+        <webMasterAddOrUpdate ref="webMasterAddOrUpdateRef" v-if="webMasterAddOrUpdateFlg" @refreshList="search()" prop="isAdd">
+        </webMasterAddOrUpdate>
+
+        <list ref="listRef" v-if="listVisible" @refreshList="setData">
+        </list>
     </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue';
-import { ElMessage, ElMessageBox, type ComponentSize } from 'element-plus'
+import { nextTick, onMounted, reactive, ref } from 'vue';
+import { ElMessage, ElMessageBox, ComponentSize } from 'element-plus'
 import global from "@/utils/global_variable";
-import { getWebMasterInfo } from '@/service/web/web-master-list';
+import { getMasterDel, getMasterSetHomepage, getWebMasterInfo } from '@/service/web/web-master-list';
 import router from '@/router';
+import { useRoute } from 'vue-router';
+import webMasterAddOrUpdate from './web-master-add-or-update.vue';
+// import list from 'src\views\official-site\webTemplateData\list.vue';
+import { useI18n } from "vue-i18n";
+const { t } = useI18n()
 
 const dataFormRef = ref()
-
+const webMasterAddOrUpdateFlg = ref(false)
 const dataForm = reactive({
     memo: '',
     isValid: ''
 })
+
+const route = useRoute();
+const webId = route.query.webId
 
 // table所用数据
 const tableList = ref([])
@@ -128,19 +141,15 @@ const handleCurrentChange = (val: number) => {
 
 // 获取数据
 const getTableList = async () => {
-
-    dataListLoading.value = true;
     let form = global.formatObj(dataForm)
-
-
-
+    dataListLoading.value = true;
     let params = Object.assign({
         page: pageIndex.value,
         limit: pageSize.value
     }, form);
 
     try {
-        const resData = await getWebMasterInfo();
+        const resData = await getWebMasterInfo(params);
         if (resData && resData.resultCode === 200) {
             tableList.value = resData.body.list;
             totalPage.value = resData.body.totalCount;
@@ -164,81 +173,95 @@ const search = () => {
     getTableList();
 }
 
-// 跳转
-const goPage = (webId: string) => {
-    router.push({
-        name: 'official-web-master-add-or-update',
-        query: {
-            webId: webId
+// 新增 / 修改
+const webMasterAddOrUpdateRef = ref()
+const addOrUpdateHandle = (webId: any) => {
+    webMasterAddOrUpdateFlg.value = true;
+    nextTick(() => {
+        if (webMasterAddOrUpdateRef.value && webMasterAddOrUpdateRef.value.init) {
+            // 判断是新增还是修改
+            const isAdd = !webId;
+            webMasterAddOrUpdateRef.value.init(webId , isAdd);
+        } else {
+            ElMessage.error('error2');
         }
     })
 }
-
 // 
-const setHomePage = (webId: string) => {
-    // let success = $t('modules.official-site.webTemplateData.success') ?
-    //               $t('modules.official-site.webTemplateData.success') : '設置首頁成功'
-    // .then((data)=>{
-    //     if(data && data.resultCode === 200) {
-    //         ElMessage.success({
-    //             message: success ,
-    //             type: 'success' ,
-    //             duration: 1500 ,
-    //             onClose: () => {
-    //                 search()
-    //             }
-    //         })
-    //     }
-    // })
+const setHomePage = async (webId: any) => {
+    let success = t('modules.official-site.webTemplateData.success') ?
+        t('modules.official-site.webTemplateData.success') : '設置首頁成功'
+    const data = await getMasterSetHomepage(webId)
+    if (data && data.resultCode === 200) {
+        ElMessage({
+            message: success,
+            type: 'success',
+            duration: 1500,
+            onClose: () => {
+                search()
+            }
+        })
+    }
 }
 
 // 配置数据
+const listRef = ref()
+const listVisible = ref(false)
 const setData = (webId: string) => {
-    router.push({
-        name:'webTemplateData-list',
-        query: {
-            webId : webId
+    listVisible.value = true;
+    nextTick(() => {
+        if (listRef.value && listRef.value.init) {
+            listRef.value.init(webId)
         }
     })
 }
 
 // 删除
-const delData = (row: string, index: number) => {
-    // let message = this.$t('modules.merchant.gcp-discount-template.delete-confirm', {
-    //     templateName: `${row.memo}`
-    //   })
-    //     ? this.$t('modules.merchant.gcp-discount-template.delete-confirm', {
-    //       templateName: `${row.memo}`
-    //     })
-    //     : '確定對【' + row.memo + '】進行解綁操作?'
-    //   let title = this.$t('modules.sys.currency.delete-title')
-    //     ? this.$t('modules.sys.currency.delete-title') : '提示'
-    //   let confirm = this.$t('modules.sys.currency.submit-btn')
-    //     ? this.$t('modules.sys.currency.submit-btn') : '確定'
-    //   let cancel = this.$t('modules.sys.currency.cancel-btn')
-    //     ? this.$t('modules.sys.currency.cancel-btn') : '取消'
-    //   let success = this.$t('modules.sys.currency.delete-success')
-    //     ? this.$t('modules.sys.currency.delete-success') : '操作成功'
+const delData = (row: { memo: string, webId: any }, index: number) => {
+    let message = t('modules.merchant.gcp-discount-template.delete-confirm', {
+        templateName: `${row.memo}`
+    })
+        ? t('modules.merchant.gcp-discount-template.delete-confirm', {
+            templateName: `${row.memo}`
+        })
+        : '確定對【' + row.memo + '】進行解綁操作?'
+    let title = t('modules.sys.currency.delete-title')
+        ? t('modules.sys.currency.delete-title') : '提示'
+    let confirm = t('modules.sys.currency.submit-btn')
+        ? t('modules.sys.currency.submit-btn') : '確定'
+    let cancel = t('modules.sys.currency.cancel-btn')
+        ? t('modules.sys.currency.cancel-btn') : '取消'
+    let success = t('modules.sys.currency.delete-success')
+        ? t('modules.sys.currency.delete-success') : '操作成功'
 
-    // ElMessageBox.confirm(message , title , {
-    //     confirmButtonText: confirm,
-    //     cancelButtonText: cancel,
-    //     type: 'warning'
-    // }).then((data) => {
-    //     if(data && data.resultCode === 200) {
-    //         ElMessage({
-    //             message: success ,
-    //             type: 'success',
-    //             duration : 1500
-    //         })
-    //         search()
-    //     }
-    // }).catch(()=>{})
+    ElMessageBox.confirm(message, title, {
+        confirmButtonText: confirm,
+        cancelButtonText: cancel,
+        type: 'warning'
+    }).then(async () => {
+        const data = await getMasterDel(row.webId)
+        if (data && data.resultCode === 200) {
+            ElMessage({
+                message: success,
+                type: 'success',
+                duration: 1500
+            })
+            search()
+        }
+    }).catch(() => { })
 }
 
+
 onMounted(() => {
+    search();
     getTableList();
 })
 </script>
 
 <style scoped></style>
+
+<!-- 
+    1.import list 这行如果打开页面就加载不出来
+    2.add-or-update 我现在能弹出来，但是新增和修改应该不一样，可我没办法区别他俩
+    3.search按钮不好用
+-->
