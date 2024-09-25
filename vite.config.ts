@@ -55,7 +55,7 @@ export default (config: UserConfig): UserConfigExport => {
       hmr: { overlay: false },
       proxy: {
         '/api': {
-          target: 'http://192.168.18.200:50062/aiotek-server',
+          target: 'http://192.168.18.200:50051/ows-server',
           changeOrigin: true,
           // 可选的配置
           rewrite: (path) => path.replace(/^\/api/, ''),
