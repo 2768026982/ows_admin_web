@@ -357,7 +357,7 @@ initialize();
     width: 100%;
     height: 100%;
     content: "";
-    background-image: url(~@/assets/images/index-bg.png);
+    background-image: url(@/assets/images/index-bg.png);
     //background-image: url(~@/assets/img/index-banner-2.jpg);
     background-size: cover;
   }
