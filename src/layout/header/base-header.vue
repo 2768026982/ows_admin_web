@@ -37,7 +37,7 @@ export default defineComponent({
 <template>
   <div class="rr-header-ctx">
     <div class="rr-header-ctx-logo hidden-xs-only">
-      <logo :logoUrl="logo" logoName="人人权限系统"></logo>
+      <logo :logoUrl="logo" logoName="TW官网"></logo>
     </div>
     <div class="rr-header-right">
       <div class="rr-header-right-left">
